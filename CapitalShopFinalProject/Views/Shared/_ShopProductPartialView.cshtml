@@ -1,0 +1,129 @@
+﻿@model ShopVM
+
+
+    <div class="container">
+        <div class="products-list-main">
+            <div class="filter-sidebar">
+                <span>Select Gender:</span>
+                <ul>
+                    <li><a class="category-selector @(ViewBag.categoryid == 0 ? "active-for-sidebar" : " ")" data-productTypeId="@ViewBag.productTypeId" data-categoryid="0" data-priceRange="@ViewBag.priceRange">All</a></li>
+                    @foreach (Category category in Model.Categories)
+                    {
+                        <li><a class=" category-selector @(category.ID==ViewBag.categoryid ? "active-for-sidebar" : " ")" data-productTypeId="@ViewBag.productTypeId" data-categoryid="@category.ID" data-priceRange="@ViewBag.priceRange">@category.Name</a></li>
+                    }
+
+
+
+                </ul>
+
+
+                <span>Select Product Type:</span>
+                <ul>
+                    <li><a class="product-type-selector @(ViewBag.productTypeId == 0 ? "active-for-sidebar" : " ")" data-productTypeId="0" data-categoryid="@ViewBag.categoryid" data-priceRange="@ViewBag.priceRange">All</a></li>
+                    @foreach (ProductType productType in Model.ProductTypes)
+                    {
+                        <li><a class="product-type-selector @(productType.ID==ViewBag.productTypeId ? "active-for-sidebar" : " ")" data-productTypeId="@productType.ID" data-categoryid="@ViewBag.categoryid" data-priceRange="@ViewBag.priceRange">@productType.Name</a></li>
+
+                    }
+
+
+
+                </ul>
+
+                <h4>Filter by Price</h4>
+                <div class="price-range-wrap">
+                    <div class="price-range" data-min="20" data-max="400"></div>
+                    <div class="range-slider">
+                        <form>
+                            <div class="price-input">
+                                <label for="amount">Price: </label>
+                                <input type="text" id="amount">
+
+                            </div>
+
+                        </form>
+                        <button data-productTypeId="@ViewBag.productTypeId" data-categoryid="@ViewBag.categoryid" class="price-filter-button">filter</button>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="products-listed-all">
+                @foreach (Product product in Model.Products)
+                {
+                    <div class="product-box-listed">
+                        <div class="products-image-listed">
+                            <a asp-action="index" asp-controller="detail" asp-route-productId="@product.ID">
+                                <img src="~/assets/Images/products/@product.MainImage" alt="">
+                            </a>
+
+                        </div>
+                        <div class="products-text-listed">
+                            <h3>
+                            <a asp-action="index" asp-controller="detail" asp-route-productId="@product.ID">@product.Title</a>
+                            </h3>
+                            <div class="products-price-listed">
+                                <span>$@product.DiscountedPrice</span><span><del>$@product.Price</del></span>
+                            </div>
+                        </div>
+                        <div class="group-buttons">
+                            <button class="shop-addtobasket-btn" data-id="@product.ID"><img src="~/assets/Images/shop/icons/add-to-basket.png" alt=""></button>
+                            <button class="shop-addtowishlist-btn" data-id="@product.ID"><img src="~/assets/Images/shop/icons/add-to-favorites.png" alt=""></button>
+                        </div>
+
+
+                    </div>
+                }
+
+
+                <div class="pagination">
+                    @if (ViewBag.pageIndex > 1)
+                    {
+                        <button class="pageIndexSelector" data-priceRange="@ViewBag.priceRange" data-productTypeId="@ViewBag.productTypeId" data-categoryid="@ViewBag.categoryid" data-pageIndex="@(ViewBag.pageIndex-1)">Previous</button>
+
+                    }
+
+                    @for (var i = 1; i <= ViewBag.pageCount; i++)
+                    {
+                        if (i >= ViewBag.pageIndex - 2 && i <= ViewBag.pageIndex + 2)
+                        {
+                            <button class="pageIndexSelector @(i==ViewBag.pageIndex ? "active-for-pagination" : " ")" data-priceRange="@ViewBag.priceRange" data-productTypeId="@ViewBag.productTypeId" data-categoryid="@ViewBag.categoryid" data-pageIndex="@i">@i</button>
+
+                        }
+                    }
+                    @if (ViewBag.pageIndex < ViewBag.pageCount)
+                    {
+                        <button class="pageIndexSelector" data-priceRange="@ViewBag.priceRange" data-productTypeId="@ViewBag.productTypeId" data-categoryid="@ViewBag.categoryid" data-pageIndex="@(ViewBag.pageIndex+1)">Next</button>
+
+                    }
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+<script>
+   
+        var rangeSlider = $(".price-range"),
+            amount = $("#amount"),
+            minPrice = rangeSlider.data('min'),
+            maxPrice = rangeSlider.data('max');
+        rangeSlider.slider({
+            range: true,
+            min: minPrice,
+            max: maxPrice,
+            values: [@ViewBag.minPrice, @ViewBag.maxPrice],
+            slide: function (event, ui) {
+                amount.val("$" + ui.values[0] + " - $" + ui.values[1]);
+            }
+        });
+        amount.val(" $" + rangeSlider.slider("values", 0) +
+            " - $" + rangeSlider.slider("values", 1));
+   
+</script>
+

@@ -1,0 +1,56 @@
+﻿@model HomeVM
+
+<div class="trending-products-carousel">
+    @foreach(Product product in Model.Products)
+    {
+        <div class="trending-products-box">
+            <div class="trending-products-image">
+                <a asp-action="index" asp-controller="detail" asp-route-productId="@product.ID">
+                    <img src="assets/Images/products/@product.MainImage" alt="">
+                </a>
+            </div>
+            <div class="trending-products-text">
+                <h3>
+                    <a asp-action="index" asp-controller="detail" asp-route-productId="@product.ID">@product.Title</a>
+                </h3>
+                <div class="trending-products-price">
+                    <span>$@product.DiscountedPrice</span><span><del>$@product.Price</del></span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $('.trending-products-carousel').slick({
+        dots: false,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: false
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    });
+</script>

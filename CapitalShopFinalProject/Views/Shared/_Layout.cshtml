@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"
+          integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/theme.min.css"
+          integrity="sha512-hbs/7O+vqWZS49DulqH1n2lVtu63t3c3MTAn0oYMINS5aT8eIAbJGDXgLt6IxDHcWyzVTgf9XyzZ9iWyVQ7mCQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+          integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+          integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="header-all">
+        <div class="container">
+            <div class="header-main">
+                <div class="header-left">
+                    <a href="">About Us</a>
+                    <a href="">Privacy</a>
+                    <a href="">FAQ</a>
+                    <a href="">Careers</a>
+                </div>
+                <div class="header-right">
+                    <a asp-action="index" asp-controller="wishlist">My Wishlist</a>
+                    <a href="">Track Your Order</a>
+                    <a class="social-media-tag" href=""><i class="fa-brands fa-facebook"></i></a>
+                    <a class="social-media-tag" href=""><i class="fa-brands fa-instagram"></i></a>
+                    <a class="social-media-tag" href=""><i class="fa-brands fa-twitter"></i></a>
+                    <a class="social-media-tag" href=""><i class="fa-brands fa-linkedin"></i></a>
+                    <a class="social-media-tag" href=""><i class="fa-brands fa-youtube"></i></a>
+
+
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+    <hr class="header-wrapper">
+    <div class="header-bottom">
+        <div class="container">
+            <div class="header-bottom-main">
+                <div class="header-bottom-left">
+                    <img src="~/assets/Images/logo/logo.png" alt="">
+                </div>
+                <div class="header-bottom-middle">
+                    <a asp-controller="home" asp-action="index">Home</a>
+                    <a asp-controller="shop" asp-action="index">Shop</a>
+                    <a href="">Blog</a>
+                    <a href="">Contact</a>
+                </div>
+                <div class="header-bottom-right">
+                    <a class="searchIcon"><i class="fa-solid fa-magnifying-glass"></i></a>
+
+                    <a href=""><i class="fa-regular fa-user"></i></a>
+                    <a asp-controller="mycard" asp-action="index" class="header-basket-btn">
+                        <i class="fa-solid fa-cart-shopping"></i><span class="basket-count">0</span>
+                    </a>
+                </div>
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+
+
+
+
+    </div>
+    <div class="header-bottom-text">
+        <p>Sale Up To 50% Biggest Discounts. Hurry! Limited Perriod Offer <a href="">Shop Now</a></p>
+
+    </div>
+
+    <div class="header-bottom-menu">
+        <button id="bottom-menu-btn" class="bottom-menu-btn">
+            <span>MENU</span>
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <div id="mobile-menu" class="mobile-menu">
+            <a class="mobile-menu-btn" href="">Home</a>
+            <a class="mobile-menu-btn" href="">Login</a>
+            <a class="mobile-menu-btn" href="">Products</a>
+            <a class="mobile-menu-btn" href="">My Card</a>
+            <a class="mobile-menu-btn" href="">Wishlist</a>
+            <a class="mobile-menu-btn" href="">Track Your Order</a>
+            <a class="mobile-menu-btn" href="">About Us</a>
+            <a class="mobile-menu-btn" href="">Contact Us</a>
+            <a class="mobile-menu-btn" href="">Log Out</a>
+        </div>
+
+    </div>
+
+
+
+    @RenderBody();
+
+
+
+
+
+                <footer>
+        <div class="footer-all">
+            <div class="container">
+                <div class="footer-top">
+                    <div class="subscribe-text">
+                        <h3>Subscribe Newsletter</h3>
+                        <p>Subscribe newsletter to get 5% on all products.</p>
+                    </div>
+                    <div class="subscribe-form">
+                        <input type="text" placeholder="Enter your email">
+                        <button>Subscribe</button>
+                    </div>
+                    <div class="social-links-footer">
+                        <a href=""><i class="fab fa-facebook"></i></a>
+                        <a href=""><i class="fab fa-instagram"></i></a>
+                        <a href=""><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <hr>
+                <div class="footer-middle">
+                    <div class="logo-footer">
+                        <img src="~/assets/Images/logo/logo_footer.png" alt="">
+                    </div>
+                    <div class="single-footer-caption">
+                        <h4>Shop Men</h4>
+                        <a href="">Clothing Fashion</a>
+                        <a href="">Winter</a>
+                        <a href="">Summer</a>
+                        <a href="">Formal</a>
+                        <a href="">Casual</a>
+                    </div>
+                    <div class="single-footer-caption">
+                        <h4>Shop Women</h4>
+                        <a href="">Clothing Fashion</a>
+                        <a href="">Winter</a>
+                        <a href="">Summer</a>
+                        <a href="">Formal</a>
+                        <a href="">Casual</a>
+                    </div>
+                    <div class="single-footer-caption">
+                        <h4>Baby Collection</h4>
+                        <a href="">Clothing Fashion</a>
+                        <a href="">Winter</a>
+                        <a href="">Summer</a>
+                        <a href="">Formal</a>
+                        <a href="">Casual</a>
+                    </div>
+                    <div class="single-footer-caption">
+                        <h4>Quick Links</h4>
+                        <a href="">Track Your Order</a>
+                        <a href="">Support</a>
+                        <a href="">FAQ</a>
+                        <a href="">About</a>
+                        <a href="">Contact Us</a>
+                    </div>
+
+
+                </div>
+                <hr>
+                <div class="footer-bottom">
+                    <p>2023 All rights reserved | This template is made by <i>Orkhan Mammadli</i></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+<div class="search-box">
+    <div class="close-btn">
+        <button class="close-search-btn"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="search-products">
+        <p>What Are You Looking?</p>
+        <input type="text" placeholder="Enter Product Name">
+    </div>
+    <div class="products-searched">
+
+        <div class="product-searched-box"><img src="~/assets/Images/products/img-11.jpg" alt=""><span> <a href="">Lorem ipsum dolor sit amet.</a>
+       </span></div>
+        <div class="product-searched-box"><img src="~/assets/Images/products/img-11.jpg" alt=""><span> <a href="">Lorem ipsum dolor sit amet.</a> </span></div>
+
+    </div>
+</div>
+
+<div class="quick-view-modal">
+
+
+
+</div>
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
+        integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+        integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/assets/js/main.js" asp-append-version="true"></script>
+    <script src="~/assets/js/custom.js" asp-append-version="true"></script>
+</body>
+
+</html>

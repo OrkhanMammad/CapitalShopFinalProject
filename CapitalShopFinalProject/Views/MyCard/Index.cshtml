@@ -1,0 +1,18 @@
+﻿@model List<BasketVM>
+
+
+<main>
+    <div class="basketlist-header">
+        <h3>My Basket</h3>
+    </div>
+
+
+    <div class="basketlist-all">
+        @await Html.PartialAsync("_MyCardPartialView", Model)
+    </div>
+
+
+
+
+
+</main>

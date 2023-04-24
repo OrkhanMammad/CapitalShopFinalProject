@@ -1,0 +1,41 @@
+﻿@model List<WishlistVM>
+
+<div class="container">
+    <div class="wishlist-main">
+        @foreach(WishlistVM wishlistVM in Model)
+        {
+            <div class="wishlist-product-box">
+                <div class="wishlist-product-box-left">
+                    <img src="assets/Images/products/@wishlistVM.Image" alt="">
+                </div>
+                <div class="wishlist-product-box-middle">
+                    <h4>@wishlistVM.Title</h4>
+                    <p>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores quia sed, cum minus
+                        iste pariatur vitae vel repellat maxime ipsam doloribus deserunt dignissimos quae
+                        fugiat.
+                    </p>
+                    <h3>$@wishlistVM.DiscountedPrice</h3>
+                </div>
+                <div class="wishlist-product-box-right">
+
+                    <button class="remove-from-wishlist" data-id="@wishlistVM.Id"><i class="fa-solid fa-heart"></i></button>
+                    <button class="shop-addtobasket-btn" data-id="@wishlistVM.Id"><i class="fa-solid fa-basket-shopping"></i>
+
+            </button>
+
+                </div>
+
+
+
+
+            </div>
+        }
+        
+
+
+
+
+    </div>
+
+</div>

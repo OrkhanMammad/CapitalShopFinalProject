@@ -1,0 +1,175 @@
+﻿@model HomeVM
+
+<main>
+
+    <section class="category-banner-all">
+
+
+        <div class="container">
+            <div class="category-banner-main">
+                @foreach(Category category in Model.Categories)
+                {
+                    <div class="category-banner-box">
+                        <img src="assets/Images/home/category-banner/@category.Image" alt="">
+                        <div class="banner-layer"></div>
+                        <a class="banner-box-title" asp-controller="shop" asp-action="index">@category.Name's Fashion</a>
+                        <a class="banner-box-shop" asp-controller="shop" asp-action="index">Shop Now</a>
+                    </div>
+                }
+            </div>
+        </div>
+
+
+    </section>
+
+
+    <section class="trending-products-all">
+        <div class="container">
+            <div class="trending-products-main">
+                <div class="trending-products-header">
+                    <h2>Trending This Week</h2>
+                    <div class="trending-products-nav">
+                        @foreach(Category category in Model.Categories)
+                        {
+                            <a class="trending-category-selector" data-id="@category.ID">@category.Name</a>
+                        }
+                    </div>
+                </div>
+                <hr>
+                <div class="trending-products-list">
+                    @await Html.PartialAsync("_TrendingPartialView", Model)
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <div class="testimonials-all">
+            <div class="testimonials-main">
+                <div class="testimonial-slider">
+                    @foreach(Testimonial testimonial in Model.Testimonials)
+                    {
+                        <div class="testimonial-box">
+                            <h2>Customer Testimonial</h2>
+                            <p>
+                                @testimonial.Content
+                            </p>
+                            <div class="testimonial-founder">
+                                <img src="assets/Images/home/testimonials/@testimonial.Image" alt="">
+                                <div class="founder-text">
+                                    <span>@testimonial.Name</span>
+                                    <h5>@testimonial.Profeciency</h5>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <div class="latest-news-all">
+            <div class="container">
+                <div class="latest-news-main">
+                    <h2>Latest News</h2>
+                    <div class="news-boxes-all">
+                        @foreach(News news in Model.News)
+                        {
+                            <div class="news-box">
+                                <div class="news-image">
+                                    <a href="">
+                                        <img src="assets/Images/home/news/@news.Image" alt="">
+                                    </a>
+                                </div>
+                                <div class="news-text">
+                                    <span>
+                                        Fashion Tip
+                                    </span>
+                                    <h5>
+                                        <a href="">
+                                            @news.Title
+                                        </a>
+                                    </h5>
+                                    <p>
+                                        @news.ShortContent
+                                    </p>
+                                    <p><a href="">Read More</a></p>
+
+                                </div>
+
+                            </div>
+                        }
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </section>
+
+    <section>
+        <div class="services-list-all">
+            <div class="services-list-main">
+                <div class="service-box">
+                    <div class="service-image">
+                        <img src="assets/Images/home/services/service-1.png" alt="">
+                    </div>
+                    <div class="service-text">
+                        <h5>Fast & Free Delivery</h5>
+                        <p>Free delivery on all orders</p>
+
+                    </div>
+
+                </div>
+                <div class="service-box">
+                    <div class="service-image">
+                        <img src="assets/Images/home/services/service-2.png" alt="">
+                    </div>
+                    <div class="service-text">
+                        <h5>Secure Payment</h5>
+                        <p>Free delivery on all orders</p>
+
+                    </div>
+
+                </div>
+                <div class="service-box">
+                    <div class="service-image">
+                        <img src="assets/Images/home/services/service-3.png" alt="">
+                    </div>
+                    <div class="service-text">
+                        <h5>Money Back Guarantee</h5>
+                        <p>Free delivery on all orders</p>
+
+                    </div>
+
+                </div>
+
+                <div class="service-box">
+                    <div class="service-image">
+                        <img src="assets/Images/home/services/service-4.png" alt="">
+                    </div>
+                    <div class="service-text">
+                        <h5>Online Support</h5>
+                        <p>Free delivery on all orders</p>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+    </section>
+
+
+
+</main>

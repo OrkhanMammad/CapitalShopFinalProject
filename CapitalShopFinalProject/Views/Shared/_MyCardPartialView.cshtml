@@ -1,0 +1,52 @@
+﻿@model List<BasketVM>
+
+
+<div class="container">
+    <div class="basketlist-main">
+        <div class="basketlist-left">
+            @foreach(BasketVM basketItem in Model)
+            {
+                <div class="basket-product-box">
+                    <div class="basket-product-box-left">
+                        <img src="assets/Images/products/@basketItem.Image" alt="">
+                    </div>
+                    <div class="basket-product-box-middle">
+                        <div class="product-box-middle-upper">
+                            <h5>@basketItem.Title</h5>
+                        </div>
+                        <div class="product-box-middle-bottom">
+                            <button class="decrement-btn" id="@basketItem.Id">-</button><input class="basket-product-count" id="@basketItem.Id" type="text" value="@basketItem.Count" min="1"><button class="increment-btn" id="@basketItem.Id">+</button>
+                            <h3>$@basketItem.DiscountedPrice</h3>
+                        </div>
+                    </div>
+                    <div class="basket-product-box-right">
+                        <button class="delete-card" data-id="@basketItem.Id"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                </div>
+
+            }
+
+            
+
+
+        </div>
+        @if (Model.Count() > 0)
+        {
+    <div class="basketlist-right">
+                <div class="basket-overall-box">
+            <h5>Products in Basket</h5>
+                    <p>Products Amount: <span>$@ViewBag.ProductsTotal</span></p>
+                    <p>Tax: <span>$50.00</span></p>
+                    <hr>
+
+                    <h6>Total Amount: <span>$@(ViewBag.ProductsTotal + 50)</span></h6>
+
+                    <a href="">Checkout</a>
+
+
+                </div>
+            </div>
+        }
+        
+    </div>
+</div>
