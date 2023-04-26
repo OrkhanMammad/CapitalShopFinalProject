@@ -1,0 +1,61 @@
+﻿@model RegisterVM
+
+<main>
+
+    <div class="register-all">
+        <div class="register-main">
+            <div class="register-header">
+                <h5>Sign Up</h5>
+                <p>Create your account to get full access</p>
+            </div>
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text text-danger">
+                     
+                </div>
+                <div class="register-input-box">
+                    <p>Name</p>
+                    <input asp-for="Name" type="text" placeholder="Name">
+                    <span asp-validation-for="Name" class="text text-danger"></span>
+
+                    <p>Surname</p>
+                    <input asp-for="Surname" type="text" placeholder="Surname">
+                    <span asp-validation-for="Surname" class="text text-danger"></span>
+
+                    <p>E-mail Address</p>
+                    <input asp-for="Email" type="email" placeholder="Enter email address">
+                    <span asp-validation-for="Email" class="text text-danger"></span>
+
+                    <p>Username</p>
+                    <input asp-for="UserName" type="text" placeholder="Username">
+                    <span asp-validation-for="UserName" class="text text-danger"></span>
+
+                    <p>Password</p>
+                    <input asp-for="Password" type="password" placeholder="Enter Password ">
+                    <span asp-validation-for="Password" class="text text-danger"></span>
+
+                    <p> Confirm Password</p>
+                    <input asp-for="ConfirmPassword" type="password" placeholder="Confirm Password ">
+                    <span asp-validation-for="ConfirmPassword" class="text text-danger"></span>
+
+                </div>
+                <div class="register-bottom">
+                    <p> Already have an account? <a href="">Login</a> here</p>
+                    <button type="submit">Sign Up</button>
+                </div>
+
+
+            </form>
+            
+
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+</main>
