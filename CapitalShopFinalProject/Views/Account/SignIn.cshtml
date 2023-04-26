@@ -1,7 +1,44 @@
-﻿
-@{
-    ViewData["Title"] = "SignIn";
-}
+﻿@model SignInVM
 
-<h1>SignIn</h1>
+<main>
+    <div class="login-all">
+        <div class="login-main">
+            <div class="login-header">
+                <h5>Login</h5>
+                <p>Enter Login details to get access</p>
+            </div>
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text text-danger"></div>
+                <div class="login-input-box">
+                    <p>Email Address</p>
+                    <input asp-for="Email" type="text" placeholder="Email address">
+                    <span asp-validation-for="Email" class="text text-danger"></span>
 
+                    <p>Password</p>
+                    <input asp-for="Password" type="password" placeholder="Password">
+                    <span asp-validation-for="Password" class="text text-danger"></span>
+                    <a class="forgotpassword" href="">Forgot Password?</a>
+                </div>
+                <div class="login-bottom">
+                    <p>Don’t have an account? <a href="">Sign Up</a> here</p>
+                    <button type="submit">Login</button>
+                </div>
+
+            </form>
+            
+
+
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+
+
+</main>
