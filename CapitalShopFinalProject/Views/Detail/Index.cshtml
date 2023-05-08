@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model ProductReviewVM
 
 <main>
     <div class="product-details-header">
@@ -10,18 +10,18 @@
             <div class="product-details-main">
                 <div class="product-detail-box">
                     <div class="product-detail-box-left">
-                        <img src="assets/Images/products/@Model.MainImage" alt="">
+                        <img src="assets/Images/products/@Model.Product.MainImage" alt="">
                     </div>
                     <div class="product-detail-box-right">
-                        <h3>@Model.Title</h3>
-                        <p>$@Model.DiscountedPrice</p>
+                        <h3>@Model.Product.Title</h3>
+                        <p>$@Model.Product.DiscountedPrice</p>
                         <button><i class="fa-regular fa-star"></i></button>
                         <button><i class="fa-regular fa-star"></i></button>
                         <button><i class="fa-regular fa-star"></i></button>
                         <button><i class="fa-regular fa-star"></i></button>
                         <button><i class="fa-regular fa-star-half"></i></button>
                         <span>(120 Reviews)</span>
-                        <h4><button class="shop-addtobasket-btn" data-id="@Model.ID">Add To Cart</button></h4>
+                        <h4><button class="shop-addtobasket-btn" data-id="@Model.Product.ID">Add To Cart</button></h4>
                     </div>
 
                 </div>
@@ -31,22 +31,19 @@
                 <div class="product-info-navlinks">
                     <button id="description" class="product-info-nav-btn active-for-product-info-nav-btn">Description</button>
                     <button id="reviews" class="product-info-nav-btn">Reviews</button>
-                    <button id="write-a-review" class="product-info-nav-btn">Write A Review</button>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <button id="write-a-review" class="product-info-nav-btn">Write A Review</button>
+                    }
+                    
                 </div>
                 <div id="description" class="product-info-box product-info-desc-box active-for-product-info-boxes">
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam excepturi id nesciunt,
-                        pariatur unde tenetur repudiandae exercitationem necessitatibus! Sed doloribus assumenda
-                        voluptatem, quidem quos nulla maiores magnam dicta laborum distinctio ratione dolorum
-                        dignissimos minus in quam quo voluptatibus animi atque iste architecto. Nihil necessitatibus
-                        deserunt maiores corrupti, similique nemo ipsa quas facere soluta officia rerum voluptates
-                        excepturi error vel numquam adipisci praesentium repellat consequatur mollitia quasi.
-                        Laudantium rerum suscipit cum quo quis tempora sequi officiis impedit delectus veniam. Nulla
-                        magni alias esse consectetur quaerat harum placeat dolore omnis voluptatibus. Eos laborum
-                        deserunt, maiores numquam voluptatibus nesciunt quos sunt consequatur sapiente.
+                       @Model.Product.Description
                     </p>
                 </div>
                 <div id="reviews" class="product-info-box product-info-reviews-box">
+                   
                     <div class="clients-review">
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
@@ -87,20 +84,9 @@
                     </div>
                 </div>
                 <div id="write-a-review" class="product-info-box product-write-review-box">
-                    <label for="">Your Name:</label>
-                    <input type="text">
-                    <label for="">Your E-Mail:</label>
-                    <input type="email">
-                    <label for="">Your Review:</label>
-                    <textarea name="" id=""></textarea>
-                    <span>Rate The Product:</span>
-                    <button><i class="fa-solid fa-star"></i></button>
-                    <button><i class="fa-solid fa-star"></i></button>
-                    <button><i class="fa-solid fa-star"></i></button>
-                    <button><i class="fa-solid fa-star"></i></button>
-                    <button><i class="fa-solid fa-star"></i></button>
-                    <button class="submit-review-btn">Submit Review</button>
+                    @await Html.PartialAsync("_AddReviewPartialView", Model.Review)
                 </div>
+                
 
 
 

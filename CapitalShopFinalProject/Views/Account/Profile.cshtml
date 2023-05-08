@@ -1,0 +1,244 @@
+﻿@model ProfileVM
+
+<main>
+    <section>
+        <div class="myaccount-header">
+            <h3>My Account</h3>
+        </div>
+    </section>
+    <div class="my-account-wrapper section-padding">
+        <div class="container custom-container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- My Account Page Start -->
+                    <div class="myaccount-page-wrapper">
+                        <!-- My Account Tab Menu Start -->
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4">
+                                <div class="myaccount-tab-menu nav " role="tablist">
+                                    <a class="@(ViewBag.Active != true ? "active" : "")" href="#dashboad" data-bs-toggle="tab">
+                                        <i class="fa fa-dashboard"></i>
+                                        Dashboard
+                                    </a>
+                                    <a href="#orders" data-bs-toggle="tab">
+                                        <i class="fa fa-cart-arrow-down"></i>
+                                        Orders
+                                    </a>
+
+                                    <a href="#address-edit" data-bs-toggle="tab">
+                                        <i class="fa fa-map-marker"></i>
+                                        address
+                                    </a>
+                                    <a href="#account-info" class="@(ViewBag.Active == true ? "active" : "")" data-bs-toggle="tab">
+                                        <i class="fa fa-user"></i> Account
+                                        Details
+                                    </a>
+                                    <a asp-controller="account" asp-action="logout"><i class="fa fa-sign-out"></i> Logout</a>
+                                </div>
+                            </div>
+                            <!-- My Account Tab Menu End -->
+                            <!-- My Account Tab Content Start -->
+                            <div class="col-lg-9 col-md-8">
+                                <div class="tab-content" id="myaccountContent">
+                                    <!-- Single Tab Content Start -->
+                                    <div class="tab-pane fade @(ViewBag.Active != true ? "active show" : "") " id="dashboad" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3>Dashboard</h3>
+                                            <div class="welcome">
+                                                <p>
+                                                    Hello, <strong></strong> (If Not <strong>
+                                                        
+                                                    </strong><a href="login-register.html" class="logout">
+                                                        Logout
+                                                    </a>)
+                                                </p>
+                                            </div>
+                                            <p class="mb-0">
+                                                From your account dashboard. you can easily check & view
+                                                your recent orders, manage your shipping and billing addresses and
+                                                edit your password and account details.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- Single Tab Content End -->
+                                    <!-- Single Tab Content Start -->
+                                    <div class="tab-pane fade" id="orders" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3>Orders</h3>
+                                            <div class="myaccount-table table-responsive text-center">
+                                                <table class="table table-bordered">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th>Order</th>
+                                                            <th>Date</th>
+                                                            <th>Status</th>
+                                                            <th>Total</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>Aug 22, 2018</td>
+                                                            <td>Pending</td>
+                                                            <td>$3000</td>
+                                                            <td><a href="cart.html" class="btn ">View</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>2</td>
+                                                            <td>July 22, 2018</td>
+                                                            <td>Approved</td>
+                                                            <td>$200</td>
+                                                            <td><a href="cart.html" class="btn ">View</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3</td>
+                                                            <td>June 12, 2017</td>
+                                                            <td>On Hold</td>
+                                                            <td>$990</td>
+                                                            <td><a href="cart.html" class="btn ">View</a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Single Tab Content End -->
+                                    <!-- Single Tab Content Start -->
+                                    <div class="tab-pane fade" id="address-edit" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3>Billing Address</h3>
+                                            <a  class="check-btn sqr-btn add-address ">
+                                                <i class="fa fa-edit"></i> Add
+                                                Address
+                                            </a>
+                                            <div class="add-address-form d-none">
+                                                @await Html.PartialAsync("_AddAddressPartial", new Address())
+
+                                            </div>
+                                            <div class="addressContainer row">
+                                                @if (Model.Addresses!=null && Model.Addresses.Count()>0)
+                                                {
+                                                    @foreach(Address address in Model.Addresses)
+                                                    {
+                                                        
+                                                        <div class="mt-30 col-lg-3">
+                                                            <h6>@($"{address.Country} {address.City}")</h6>
+                                                            <p>@address.AddressLIne</p>
+                                                            <p> Postal Code: @address.PostalCode</p>
+                                                            <a class="check-btn sqr-btn ">
+                                                                <i class="fa fa-edit"></i> Edit
+                                                                Address
+                                                            </a>
+                                                        </div>
+
+                                                    }
+
+
+                                                }
+
+
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <!-- Single Tab Content End -->
+                                    <!-- Single Tab Content Start -->
+                                    <div class="tab-pane fade @(ViewBag.Active == true ? "active show" : "")" id="account-info" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3>Account Details</h3>
+                                            <div class="account-details-form">
+                                                <form method="post">
+                                                    <div asp-validation-summary="ModelOnly" class="text text-danger"></div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="single-input-item">
+                                                                <label asp-for="Name" class="required">
+                                                                    First
+                                                                    Name
+                                                                </label>
+                                                                <input asp-for="Name" type="text" id="first-name"
+                                                                       placeholder="First Name" />
+                                                                       <span asp-validation-for="Name"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="single-input-item">
+                                                                <label asp-for="Surname" class="required">
+                                                                    Last
+                                                                    Name
+                                                                </label>
+                                                                <input asp-for="Surname" type="text" id="last-name"
+                                                                       placeholder="Last Name" />
+                                                                <span asp-validation-for="Surname"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-input-item">
+                                                        <label asp-for="UserName" class="required">
+                                                            Display
+                                                            Name
+                                                        </label>
+                                                        <input asp-for="UserName" type="text" id="display-name"
+                                                               placeholder="Display Name" />
+                                                        <span asp-validation-for="UserName"></span>
+                                                    </div>
+                                                    <div class="single-input-item">
+                                                        <label asp-for="Email" class="required">Email Addres</label>
+                                                        <input asp-for="Email" type="email" id="email"
+                                                               placeholder="Email Address" />
+                                                        <span asp-validation-for="Email"></span>
+                                                    </div>
+                                                    <fieldset>
+                                                        <legend>Password change</legend>
+                                                        <div class="single-input-item">
+                                                            <label asp-for="OldPassword" class="required">
+                                                                Current
+                                                                Password
+                                                            </label>
+                                                            <input asp-for="OldPassword" type="password" id="current-pwd"
+                                                                   placeholder="Current Password" />
+                                                            <span asp-validation-for="OldPassword"></span>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <div class="single-input-item">
+                                                                    <label asp-for="Password" class="required">
+                                                                        New
+                                                                        Password
+                                                                    </label>
+                                                                    <input asp-for="Password" type="password" id="new-pwd"
+                                                                           placeholder="New Password" />
+                                                                    <span asp-validation-for="Password"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="single-input-item">
+                                                                    <label asp-for="ConfirmPassword"
+                                                                           class="required">Confirm Password</label>
+                                                                    <input asp-for="ConfirmPassword" type="password" id="confirm-pwd"
+                                                                           placeholder="Confirm Password" />
+                                                                    <span asp-validation-for="ConfirmPassword"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <div class="single-input-item">
+                                                        <button type="submit" class="check-btn sqr-btn ">Save Changes</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div> <!-- Single Tab Content End -->
+                                </div>
+                            </div> <!-- My Account Tab Content End -->
+                        </div>
+                    </div> <!-- My Account Page End -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</main>

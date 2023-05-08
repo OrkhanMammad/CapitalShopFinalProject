@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using NuGet.Common;
 using System.ComponentModel.DataAnnotations;
 
 namespace CapitalShopFinalProject.Models
@@ -10,6 +11,17 @@ namespace CapitalShopFinalProject.Models
 
         [StringLength(100)]
         public string SurName { get; set; }
+
+        public IEnumerable<Review>? Reviews { get; set; }
+
+        public IEnumerable<Address>? Addresses { get; set; }
+
+        public List<Basket>? Baskets { get; set; }
+
+        public IEnumerable<Order>? Orders { get; set; }
+
+
+
 
 
 

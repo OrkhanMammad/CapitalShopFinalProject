@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CapitalShopFinalProject.Areas.Manage.Controllers
+namespace CapitalShopFinalProject.Areas.Manage.Controllers 
 {
     [Area("Manage")]
 

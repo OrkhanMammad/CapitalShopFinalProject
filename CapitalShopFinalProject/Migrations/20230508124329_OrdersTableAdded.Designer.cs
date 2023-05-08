@@ -4,6 +4,7 @@ using CapitalShopFinalProject.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CapitalShopFinalProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230508124329_OrdersTableAdded")]
+    partial class OrdersTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -397,60 +399,6 @@ namespace CapitalShopFinalProject.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("CapitalShopFinalProject.Models.OrderItem", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int?>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasMaxLength(255)
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<double?>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("CapitalShopFinalProject.Models.Product", b =>
@@ -978,21 +926,6 @@ namespace CapitalShopFinalProject.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("CapitalShopFinalProject.Models.OrderItem", b =>
-                {
-                    b.HasOne("CapitalShopFinalProject.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("CapitalShopFinalProject.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("CapitalShopFinalProject.Models.Product", b =>

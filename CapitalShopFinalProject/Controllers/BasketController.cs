@@ -37,6 +37,8 @@ namespace CapitalShopFinalProject.Controllers
                 {
                     List<BasketVM> BasketList=new List<BasketVM>();
 
+                    
+
                     BasketVM basketVM = new BasketVM
                     {
                         Id=newBasketItem.ID,

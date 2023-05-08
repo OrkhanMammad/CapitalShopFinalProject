@@ -4,10 +4,6 @@
     box-sizing: border-box;
 }
 
-a{
-    cursor: pointer !important;
-}
-
 .container {
     padding: 0 7rem;
 }
@@ -1726,15 +1722,7 @@ Shop Page Starts Here */
 }
 
 
-.filter-sidebar {
-    width: 25%;
-    border: 2px solid #edeff2;
-    padding: 30px 19px 30px 30px;
-    
-}
-
-
-.price-filter-button {
+.price-filter-button{
     border: none;
     color: #333333;
     font-size: 14px;
@@ -1745,6 +1733,14 @@ Shop Page Starts Here */
     padding: 0 15px;
     border-radius: 3px;
     background-color: #ebebeb;
+}
+
+
+.filter-sidebar {
+    width: 25%;
+    border: 2px solid #edeff2;
+    padding: 30px 19px 30px 30px;
+    
 }
 
 .filter-sidebar ul li{
@@ -2418,11 +2414,11 @@ width: 25%;
 wishlist page starts here
 wishlist page starts here
 wishlist page starts here */
-.wishlist-header, .basketlist-header, .contact-header, .product-details-header{
+.wishlist-header, .basketlist-header, .contact-header, .product-details-header, .myaccount-header{
     padding: 50px 0;
     background-color: #f3ead8;
 }
-.wishlist-header, .basketlist-header, .contact-header, .product-details-header h3{
+.wishlist-header, .basketlist-header, .contact-header, .product-details-header, .myaccount-header h3{
     text-align: center;
     color: #292621;
     font-size: 35px;
@@ -2831,8 +2827,272 @@ align-items: center;
         }
 }
 
-li {
-    cursor: pointer !important;
+/* MYACCOUNT PAGE STARTS HERE
+MYACCOUNT PAGE STARTS HERE
+MYACCOUNT PAGE STARTS HERE
+MYACCOUNT PAGE STARTS HERE */
+
+.section-padding {
+    padding: 80px 0; }
+    @media only screen and (max-width: 767.98px) {
+      .section-padding {
+        padding: 62px 0; } }
+
+.myaccount-tab-menu {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column; }
+    .myaccount-tab-menu a {
+      border: 1px solid #ccc;
+      border-bottom: none;
+      color: #333333;
+      font-weight: 500;
+      font-size: 15px;
+      display: block;
+      padding: 10px 15px;
+      text-transform: uppercase; }
+      .myaccount-tab-menu a:last-child {
+        border-bottom: 1px solid #ccc; }
+      .myaccount-tab-menu a:hover, .myaccount-tab-menu a.active {
+        background-color: red;
+        border-color: red;
+        color: #fff; }
+      .myaccount-tab-menu a i.fa {
+        font-size: 14px;
+        text-align: center;
+        width: 25px; }
+  
+  @media only screen and (max-width: 767.98px) {
+    #myaccountContent {
+      margin-top: 30px; } }
+  
+  .myaccount-content {
+    border: 1px solid #eeeeee;
+    padding: 30px; }
+    @media only screen and (max-width: 575.98px) {
+      .myaccount-content {
+        padding: 20px 15px; } }
+    .myaccount-content form {
+      margin-top: -20px; }
+    .myaccount-content h3 {
+      font-size: 20px;
+      border-bottom: 1px dashed #ccc;
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+      font-weight: 500; }
+    .myaccount-content .welcome a {
+      color: #333333; }
+      .myaccount-content .welcome a:hover {
+        color: #e3a51e; }
+    .myaccount-content .welcome strong {
+      font-weight: 600;
+      color: #e3a51e; }
+    .myaccount-content fieldset {
+      margin-top: 20px; }
+      .myaccount-content fieldset legend {
+        color: #333333;
+        font-size: 20px;
+        margin-top: 20px;
+        font-weight: 500;
+        border-bottom: 1px dashed #ccc; }
+  
+  .myaccount-table {
+    white-space: nowrap;
+    font-size: 14px; }
+    .myaccount-table table th,
+    .myaccount-table .table th {
+      color: #333333;
+      padding: 10px;
+      font-weight: 500;
+      background-color: #f8f8f8;
+      border-color: #ccc;
+      border-bottom: 0; }
+    .myaccount-table table td,
+    .myaccount-table .table td {
+      padding: 10px;
+      vertical-align: middle;
+      border-color: #ccc; }
+  
+  .saved-message {
+    background-color: #f4f5f7;
+    border-top: 3px solid #e3a51e;
+    border-radius: 5px 5px 0 0;
+    font-weight: 600;
+    font-size: 15px;
+    color: #666666;
+    padding: 20px; }
+  
+  /*-------- Start My Account Page Wrapper --------*/
+  /*------ contact form area start -------*/
+  .contact-title {
+    color: #333333;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 600;
+    margin-top: -4px;
+    text-transform: capitalize;
+    padding-bottom: 30px; }
+    @media only screen and (max-width: 575.98px) {
+      .contact-title {
+        font-size: 18px;
+        padding-bottom: 15px; } }
+  
+  .contact-message form input, .contact-message form textarea {
+    width: 100%;
+    border: none;
+    padding: 10px 10px;
+    border-bottom: 3px solid transparent;
+    background-color: #f3f6f5;
+    margin-bottom: 30px; }
+  
+  .contact-message form textarea {
+    height: 150px; }
+  
+  /*------ contact form area start -------*/
+  /*------ contact info area start -------*/
+  .contact-info {
+    height: 100%; }
+    @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+      .contact-info {
+        margin-top: 80px; } }
+    @media only screen and (max-width: 767.98px) {
+      .contact-info {
+        margin-top: 62px;
+        margin-bottom: -7px; } }
+    .contact-info p {
+      color: #666666;
+      padding-bottom: 30px; }
+      @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+        .contact-info p {
+          padding-bottom: 10px; } }
+    .contact-info ul li {
+      border-bottom: 1px solid #e5e5e5;
+      padding-bottom: 15px;
+      margin-bottom: 15px; }
+      .contact-info ul li:last-child {
+        border-bottom: none; }
+      .contact-info ul li i {
+        font-size: 18px;
+        padding-right: 10px; }
+    .contact-info .working-time h3 {
+      font-size: 16px;
+      font-weight: 600;
+      padding-bottom: 5px; }
+    .contact-info .working-time p span {
+      color: #333333;
+      padding-right: 10px; }
+  
+  /*------ contact info area end -------*/
+  #map_content {
+    height: 500px; }
+    @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+      #map_content {
+        height: 400px; } }
+    @media only screen and (max-width: 767.98px) {
+      #map_content {
+        height: 300px; } }
+    @media only screen and (max-width: 575.98px) {
+      #map_content {
+        height: 200px; } }
+
+        /*------- input box style css start -------*/
+.single-input-item {
+    margin-top: 20px; }
+    .single-input-item label {
+      color: #333333;
+      text-transform: capitalize;
+      font-size: 14px; }
+      .single-input-item label.required:after {
+        content: '*';
+        color: red;
+        font-size: 14px;
+        margin-left: 3px;
+        margin-top: 5px; }
+    .single-input-item input,
+    .single-input-item textarea {
+      color: #666666;
+      border: 1px solid #ccc;
+      padding: 12px 10px;
+      width: 100%;
+      font-size: 14px;
+      background: #f7f7f7; }
+      .single-input-item input:active, .single-input-item input:focus,
+      .single-input-item textarea:active,
+      .single-input-item textarea:focus {
+        border-color: #e3a51e;
+        background-color: #fff; }
+    .single-input-item .nice-select {
+      width: 100%;
+      border-radius: 0;
+      height: 48px;
+      border-color: #ccc;
+      background-color: #f7f7f7; }
+      .single-input-item .nice-select .current {
+        color: #666666; }
+      .single-input-item .nice-select .list {
+        max-height: 200px;
+        overflow: auto;
+        width: 100%; }
+
+        .sqr-btn{
+            background-color: green;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            color: white;
+            font-weight: 500;
+        }
+  
+  /*------- input box style css end -------*/
+
+
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+
+    .rate:not(:checked) > input {
+        position: absolute;
+        top: -9999px;
+    }
+
+    .rate:not(:checked) > label {
+        float: right;
+        width: 1em;
+        overflow: hidden;
+        white-space: nowrap;
+        cursor: pointer;
+        font-size: 30px;
+        color: #ccc;
+    }
+
+        .rate:not(:checked) > label:before {
+            content: '★ ';
+        }
+
+    .rate > input:checked ~ label {
+        color: #ffc700;
+    }
+
+    .rate:not(:checked) > label:hover,
+    .rate:not(:checked) > label:hover ~ label {
+        color: #deb217;
+    }
+
+    .rate > input:checked + label:hover,
+    .rate > input:checked + label:hover ~ label,
+    .rate > input:checked ~ label:hover,
+    .rate > input:checked ~ label:hover ~ label,
+    .rate > label:hover ~ input:checked ~ label {
+        color: #c59b08;
+    }
+
+
+.rating-add{
+    margin-bottom: 40px !important;
 }
 
 

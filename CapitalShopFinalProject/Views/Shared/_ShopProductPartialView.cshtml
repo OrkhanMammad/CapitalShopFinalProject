@@ -53,14 +53,14 @@
                 {
                     <div class="product-box-listed">
                         <div class="products-image-listed">
-                            <a asp-action="index" asp-controller="detail" asp-route-productId="@product.ID">
+                            <a asp-action="detail" asp-controller="shop" asp-route-productId="@product.ID">
                                 <img src="~/assets/Images/products/@product.MainImage" alt="">
                             </a>
 
                         </div>
                         <div class="products-text-listed">
                             <h3>
-                            <a asp-action="index" asp-controller="detail" asp-route-productId="@product.ID">@product.Title</a>
+                            <a asp-action="detail" asp-controller="shop" asp-route-productId="@product.ID">@product.Title</a>
                             </h3>
                             <div class="products-price-listed">
                                 <span>$@product.DiscountedPrice</span><span><del>$@product.Price</del></span>

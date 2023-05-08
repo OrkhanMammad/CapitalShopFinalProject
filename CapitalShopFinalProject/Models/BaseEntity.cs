@@ -7,7 +7,7 @@ namespace CapitalShopFinalProject.Models
 
         public int ID { get; set; }
         [StringLength(255)]
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
 
         [StringLength(255)]
         public string? CreatedBy { get; set; }

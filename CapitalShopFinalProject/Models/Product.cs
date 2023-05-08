@@ -34,5 +34,7 @@ namespace CapitalShopFinalProject.Models
         public ProductType ProductType { get; set; }
 
         public bool? IsTrending { get; set; }
+
+        public IEnumerable<Review>? Reviews { get; set; }
     }
 }

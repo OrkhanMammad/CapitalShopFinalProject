@@ -1,0 +1,32 @@
+﻿@model Review
+
+<div class="rating-add">
+    <div class="rate">
+        <span>Rating: </span>
+        <input form="reviewForm" type="radio" id="star5" asp-for="Star" value="5" />
+        <label for="star5" title="5">5 stars</label>
+        <input form="reviewForm" type="radio" id="star4" asp-for="Star" value="4" />
+        <label for="star4" title="4">4 stars</label>
+        <input form="reviewForm" type="radio" id="star3" asp-for="Star" value="3" />
+        <label for="star3" title="3">3 stars</label>
+        <input form="reviewForm" type="radio" id="star2" asp-for="Star" value="2" />
+        <label for="star2" title="2">2 stars</label>
+        <input form="reviewForm" type="radio" id="star1" asp-for="Star" value="1" />
+        <label for="star1" title="1">1 star</label>
+    </div>
+</div>
+
+<form id="reviewForm" method="post" asp-controller="shop" asp-action="AddReview">
+    <input type="hidden" name="ProductId" value="@Model.ProductId" />
+    <input type="hidden" name="IsDeleted" value="@Model.IsDeleted" />
+    <label asp-for="Name">Your Name:</label>
+    <input asp-for="Name" type="text">
+    <span asp-validation-for="Name" class="text-danger"></span>
+    <label asp-for="Email">Your E-Mail:</label>
+    <input asp-for="Email" type="email">
+    <label asp-for="Description" >Your Review:</label>
+    <textarea asp-for="Description"></textarea>
+   
+    <button type="submit" class="submit-review-btn">Submit Review</button>
+</form>
+

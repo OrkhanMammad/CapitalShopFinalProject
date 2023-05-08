@@ -16,6 +16,16 @@ namespace CapitalShopFinalProject.DataAccessLayer
         public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<News> News { get; set; }
 
+        public DbSet<ReviewTest> ReviewTests { get; set; }
+
+        public DbSet<Review> Reviews { get; set; }
+
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Basket> Baskets { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderItem> OrderItems { get; set; }
 
     }
 }

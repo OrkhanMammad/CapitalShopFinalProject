@@ -1,6 +1,8 @@
 ﻿using CapitalShopFinalProject.DataAccessLayer;
 using CapitalShopFinalProject.Models;
+using CapitalShopFinalProject.ViewModels.ProductReviewVM;
 using CapitalShopFinalProject.ViewModels.ShopVM;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -10,11 +12,19 @@ namespace CapitalShopFinalProject.Controllers
     public class ShopController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<AppUser> _signInManager;
 
-        public ShopController(AppDbContext context)
+        public ShopController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<AppUser> signInManager, AppDbContext context)
         {
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _signInManager = signInManager;
             _context = context;
         }
+
+       
 
         public async Task<IActionResult> Index()
         {
@@ -118,8 +128,67 @@ namespace CapitalShopFinalProject.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Detail(int? productId)
+        {
+            if (productId == null)
+            {
+                return BadRequest();
+            }
+            Product product = await _context.Products.Include(p => p.ProductImages.Where(p => p.IsDeleted == false)).Include(p => p.Reviews.Where(p => p.IsDeleted == false)).FirstOrDefaultAsync(p => p.IsDeleted == false && p.ID == productId);
 
-        
+            if (product == null) { return NotFound(); }
+
+            ProductReviewVM productReviewVM = new ProductReviewVM
+            {
+                Product = product,
+                Review = new Review { ProductId = productId },
+
+            };
+
+
+
+            return View(productReviewVM);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddReview(Review review)
+        {
+            Product product = await _context.Products
+                .Include(p => p.ProductImages.Where(p => p.IsDeleted == false))
+                .Include(p => p.Reviews.Where(p => p.IsDeleted == false))
+                .FirstOrDefaultAsync(p => p.IsDeleted == false && p.ID == review.ProductId);
+
+            review.IsDeleted = false;
+
+            ProductReviewVM productReviewVM = new ProductReviewVM { Product = product, Review = review };
+
+            if (!ModelState.IsValid)
+            {
+                return View("Detail", productReviewVM);
+            }
+            AppUser appUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            if (product.Reviews != null && product.Reviews.Count() > 0 && product.Reviews.Any(r => r.AppUserId == appUser.Id))
+            {
+                ModelState.AddModelError("Name", "Siz artiq fikir bildirmisiniz");
+                return View("Detail", productReviewVM);
+
+            }
+
+            review.CreatedBy = $"{appUser.Name} {appUser.SurName}";
+            review.CreatedAt = DateTime.UtcNow.AddHours(4);
+            review.AppUserId = appUser.Id;
+
+            await _context.Reviews.AddAsync(review);
+            await _context.SaveChangesAsync();
+            ViewBag.showReview=true;
+
+            return RedirectToAction("Detail", "Shop", new { ProductId = product.ID });
+
+        }
+
 
 
     }

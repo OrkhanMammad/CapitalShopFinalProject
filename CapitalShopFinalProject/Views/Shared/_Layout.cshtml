@@ -69,10 +69,17 @@
                     <a href="">Blog</a>
                     <a href="">Contact</a>
                 </div>
-                <div class="header-bottom-right">
+                <div class="header-bottom-right">                   
                     <a class="searchIcon"><i class="fa-solid fa-magnifying-glass"></i></a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-controller="account" asp-action="profile"><i class="fa-regular fa-user"></i></a>
+                    }
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <a asp-controller="account" asp-action="signin"><i class="fa-regular fa-user"></i></a>
+                    }
 
-                    <a href=""><i class="fa-regular fa-user"></i></a>
                     <a asp-controller="mycard" asp-action="index" class="header-basket-btn">
                         <i class="fa-solid fa-cart-shopping"></i><span class="basket-count">0</span>
                     </a>

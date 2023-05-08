@@ -19,6 +19,15 @@ $(document).on('click', '.remove-from-wishlist', (function () {
         });
 }))
 
+$(document).on("click", ".add-address", (function (e) {
+    e.preventDefault();
+    $('addressContainer').addClass('d-none')
+    $('.add-address-form').removeClass('d-none')
+
+
+
+}))
+
 
 
 

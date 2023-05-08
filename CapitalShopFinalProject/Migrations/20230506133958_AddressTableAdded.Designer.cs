@@ -4,6 +4,7 @@ using CapitalShopFinalProject.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CapitalShopFinalProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230506133958_AddressTableAdded")]
+    partial class AddressTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +61,7 @@ namespace CapitalShopFinalProject.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<bool?>("IsDeleted")
+                    b.Property<bool>("IsDeleted")
                         .HasMaxLength(255)
                         .HasColumnType("bit");
 
@@ -163,58 +165,6 @@ namespace CapitalShopFinalProject.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("CapitalShopFinalProject.Models.Basket", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasMaxLength(255)
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Baskets");
-                });
-
             modelBuilder.Entity("CapitalShopFinalProject.Models.Category", b =>
                 {
                     b.Property<int>("ID")
@@ -241,7 +191,7 @@ namespace CapitalShopFinalProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("IsDeleted")
+                    b.Property<bool>("IsDeleted")
                         .HasMaxLength(255)
                         .HasColumnType("bit");
 
@@ -294,7 +244,7 @@ namespace CapitalShopFinalProject.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<bool?>("IsDeleted")
+                    b.Property<bool>("IsDeleted")
                         .HasMaxLength(255)
                         .HasColumnType("bit");
 
@@ -316,141 +266,6 @@ namespace CapitalShopFinalProject.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("News");
-                });
-
-            modelBuilder.Entity("CapitalShopFinalProject.Models.Order", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<string>("AddressLine")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasMaxLength(255)
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("No")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("CapitalShopFinalProject.Models.OrderItem", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int?>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasMaxLength(255)
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<double?>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("CapitalShopFinalProject.Models.Product", b =>
@@ -488,7 +303,7 @@ namespace CapitalShopFinalProject.Migrations
                     b.Property<decimal>("DiscountedPrice")
                         .HasColumnType("money");
 
-                    b.Property<bool?>("IsDeleted")
+                    b.Property<bool>("IsDeleted")
                         .HasMaxLength(255)
                         .HasColumnType("bit");
 
@@ -556,7 +371,7 @@ namespace CapitalShopFinalProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("IsDeleted")
+                    b.Property<bool>("IsDeleted")
                         .HasMaxLength(255)
                         .HasColumnType("bit");
 
@@ -599,7 +414,7 @@ namespace CapitalShopFinalProject.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<bool?>("IsDeleted")
+                    b.Property<bool>("IsDeleted")
                         .HasMaxLength(255)
                         .HasColumnType("bit");
 
@@ -656,7 +471,7 @@ namespace CapitalShopFinalProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("IsDeleted")
+                    b.Property<bool>("IsDeleted")
                         .HasMaxLength(255)
                         .HasColumnType("bit");
 
@@ -721,7 +536,7 @@ namespace CapitalShopFinalProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("IsDeleted")
+                    b.Property<bool>("IsDeleted")
                         .HasMaxLength(255)
                         .HasColumnType("bit");
 
@@ -784,7 +599,7 @@ namespace CapitalShopFinalProject.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<bool?>("IsDeleted")
+                    b.Property<bool>("IsDeleted")
                         .HasMaxLength(255)
                         .HasColumnType("bit");
 
@@ -946,53 +761,10 @@ namespace CapitalShopFinalProject.Migrations
             modelBuilder.Entity("CapitalShopFinalProject.Models.Address", b =>
                 {
                     b.HasOne("CapitalShopFinalProject.Models.AppUser", "AppUser")
-                        .WithMany("Addresses")
+                        .WithMany()
                         .HasForeignKey("AppUserId");
 
                     b.Navigation("AppUser");
-                });
-
-            modelBuilder.Entity("CapitalShopFinalProject.Models.Basket", b =>
-                {
-                    b.HasOne("CapitalShopFinalProject.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CapitalShopFinalProject.Models.AppUser", "User")
-                        .WithMany("Baskets")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("CapitalShopFinalProject.Models.Order", b =>
-                {
-                    b.HasOne("CapitalShopFinalProject.Models.AppUser", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("CapitalShopFinalProject.Models.OrderItem", b =>
-                {
-                    b.HasOne("CapitalShopFinalProject.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("CapitalShopFinalProject.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("CapitalShopFinalProject.Models.Product", b =>
@@ -1108,12 +880,6 @@ namespace CapitalShopFinalProject.Migrations
 
             modelBuilder.Entity("CapitalShopFinalProject.Models.AppUser", b =>
                 {
-                    b.Navigation("Addresses");
-
-                    b.Navigation("Baskets");
-
-                    b.Navigation("Orders");
-
                     b.Navigation("Reviews");
                 });
 
