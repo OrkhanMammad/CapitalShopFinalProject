@@ -1,0 +1,55 @@
+﻿@model List<ProductType>
+
+@{
+    int count = 1;
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <h1 class="h3 mb-4 text-gray-800">Product Types Page</h1>
+        </div>
+        <div class="col-lg-2">
+            <a asp-action="create" asp-controller="productType" asp-area="manage" class="btn btn-primary">Create</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (ProductType productType in Model)
+                    {
+                        <tr>
+
+                            <td>@count</td>
+
+                            <td>@productType.Name</td>
+                            <td>
+                                <a asp-area="manage" asp-controller="productType" asp-action="detail" asp-route-productTypeId="@productType.ID" class="btn btn-primary">Detail</a>
+                                <a asp-area="manage" asp-controller="productType" asp-action="Update" asp-route-productTypeId="@productType.ID" class="btn btn-warning">Update</a>
+                                <a asp-area="manage" asp-controller="productType" asp-action="DeleteDetail" asp-route-productTypeId="@productType.ID" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                        count++;
+
+
+
+                    }
+
+
+
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+

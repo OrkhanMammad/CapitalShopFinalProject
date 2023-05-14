@@ -29,6 +29,8 @@ namespace CapitalShopFinalProject.Models
         public string? AppUserId { get; set; }
         public AppUser? AppUser { get; set; }
 
+        
+
 
 
     }

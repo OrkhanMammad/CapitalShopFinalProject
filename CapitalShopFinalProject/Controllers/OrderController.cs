@@ -51,20 +51,26 @@ namespace CapitalShopFinalProject.Controllers
                 Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == basketVM.Id);
                 basketVM.DiscountedPrice = product.DiscountedPrice;
                 basketVM.Title= product.Title;
+                
             }
 
             Order order = new Order
-            { 
-                Name=appUser?.Name,
-                Surname=appUser?.SurName,
-                Email=appUser?.Email,
-                AddressLine=address?.AddressLIne,
-                City=address?.City,
-                PostalCode=address?.PostalCode,
-                State=address?.State,
-                Country=address?.Country,
+            {
+                Name = appUser?.Name,
+                Surname = appUser?.SurName,
+                Email = appUser?.Email,
+                AddressLine = address?.AddressLIne,
+                City = address?.City,
+                PostalCode = address?.PostalCode,
+                State = address?.State,
+                Country = address?.Country,
+                IsDeleted = false,
+                UserId = appUser.Id,
+
 
             };
+
+            
 
             OrderVM orderVM = new OrderVM
             { 
@@ -78,7 +84,7 @@ namespace CapitalShopFinalProject.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Checkout( Order order)
+        public async Task<IActionResult> Checkout( OrderVM orderVM)
         {
             string basket = HttpContext.Request.Cookies["basket"];
             if (string.IsNullOrWhiteSpace(basket))
@@ -88,6 +94,7 @@ namespace CapitalShopFinalProject.Controllers
 
             AppUser appUser = await _userManager.Users.Include(u => u.Baskets.Where(b => b.IsDeleted == false))
                 .Include(u => u.Orders)
+                
                 .Include(u => u.Addresses.Where(a => a.IsMain && a.IsDeleted == false))
                 .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
@@ -102,15 +109,15 @@ namespace CapitalShopFinalProject.Controllers
                 basketVM.Title = product.Title;
             }
 
-            OrderVM orderVM = new OrderVM
+            OrderVM orderVM1 = new OrderVM
             {
-                Order = order,
+                Order =orderVM.Order ,
                 BasketVMs = basketVMs,
             };
 
             if(!ModelState.IsValid) 
             { 
-                return View(order);
+                return View(orderVM.Order);
             
             }
 
@@ -120,6 +127,7 @@ namespace CapitalShopFinalProject.Controllers
             {
                 OrderItem orderItem = new OrderItem
                 {
+                    Title=basketVm.Title,
                     ProductId = basketVm.Id,
                     Count = basketVm.Count,
                     Price = basketVm.DiscountedPrice,
@@ -139,14 +147,16 @@ namespace CapitalShopFinalProject.Controllers
             }
 
             HttpContext.Response.Cookies.Append("basket", "");
-            order.UserId= appUser.Id;
-            order.CreatedAt = DateTime.UtcNow.AddHours(4);
-            order.CreatedBy = $"{appUser.Name} {appUser.SurName}";
-            order.OrderItems= orderItems;
-            order.No = appUser.Orders != null && appUser.Orders.Count() > 0 ? appUser.Orders.Last().No + 1 : 1;
+            orderVM.Order.IsDeleted = false;
+            orderVM.Order.UserId= appUser.Id;
+            orderVM.Order.CreatedAt = DateTime.UtcNow.AddHours(4);
+            orderVM.Order.CreatedBy = $"{appUser.Name} {appUser.SurName}";
+            orderVM.Order.OrderItems= orderItems;
+            orderVM.Order.No = appUser.Orders != null && appUser.Orders.Count() > 0 ? appUser.Orders.Last().No + 1 : 1;
+            orderVM.Order.Status = Enums.OrderType.Pending;
             
 
-            await _context.Orders.AddAsync(order);
+            await _context.Orders.AddAsync(orderVM.Order);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", "home");

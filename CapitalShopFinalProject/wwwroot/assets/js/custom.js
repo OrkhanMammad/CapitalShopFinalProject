@@ -203,3 +203,19 @@ for(let searchCloseIcon of searchCloseIcons){
         
     })
 }
+
+
+
+
+$(document).on('click', '.orderClick', (function () {
+    let id = this.getAttribute('id')
+    let orderDescs = document.getElementsByClassName('orderDesc')
+    for (let orderDesc of orderDescs)
+    {
+        if (orderDesc.getAttribute('id') == id) {
+            orderDesc.classList.toggle('hiddenRow')
+        }
+    }
+    
+
+}))

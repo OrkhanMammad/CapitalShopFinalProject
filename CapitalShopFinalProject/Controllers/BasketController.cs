@@ -1,6 +1,7 @@
 ﻿using CapitalShopFinalProject.DataAccessLayer;
 using CapitalShopFinalProject.Models;
 using CapitalShopFinalProject.ViewModels.BasketVM;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -11,9 +12,11 @@ namespace CapitalShopFinalProject.Controllers
     public class BasketController : Controller
     {
         private readonly AppDbContext _context;
-        public BasketController(AppDbContext context)
+        private readonly UserManager<AppUser>  _userManager;
+        public BasketController(AppDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager= userManager;
         }
 
         public async Task<IActionResult> Index(int? productId)
@@ -51,6 +54,37 @@ namespace CapitalShopFinalProject.Controllers
 
                     string srzdProducts = JsonConvert.SerializeObject(BasketList);
                     HttpContext.Response.Cookies.Append("basket", srzdProducts);
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        AppUser appUser = await _userManager.Users.Include(u => u.Baskets.Where(b => b.IsDeleted == false))
+                            .FirstOrDefaultAsync(u => u.NormalizedUserName == User.Identity.Name.ToUpperInvariant());
+
+                        if (appUser.Baskets.Any(b => b.ProductId == productId))
+                        {
+                            appUser.Baskets.FirstOrDefault(b => b.ProductId == productId).Count = BasketList.FirstOrDefault(b => b.Id == productId).Count;
+
+                        }
+
+                        else
+                        {
+                            Basket dbBasket = new Basket
+                            {
+                                ProductId = productId,
+                                Count = BasketList.FirstOrDefault(b => b.Id == productId).Count
+
+                            };
+
+                            appUser.Baskets.Add(dbBasket);
+
+
+
+                        }
+                        await _context.SaveChangesAsync();
+
+
+
+
+                    }
                     return Ok();
 
                 }
@@ -86,9 +120,47 @@ namespace CapitalShopFinalProject.Controllers
 
                     string srzdProducts = JsonConvert.SerializeObject(BasketList);
                     HttpContext.Response.Cookies.Append("basket", srzdProducts);
-                    return Ok();
-                }
 
+
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        AppUser appUser = await _userManager.Users.Include(u=>u.Baskets.Where(b=>b.IsDeleted==false))
+                            .FirstOrDefaultAsync(u=>u.NormalizedUserName==User.Identity.Name.ToUpperInvariant());
+
+                        if (appUser.Baskets.Any(b => b.ProductId == productId))
+                        {
+                            appUser.Baskets.FirstOrDefault(b => b.ProductId == productId).Count = BasketList.FirstOrDefault(b => b.Id == productId).Count;
+
+                        }
+
+                        else
+                        {
+                            Basket dbBasket= new Basket
+                            {
+                                ProductId=productId,
+                                Count= BasketList.FirstOrDefault(b => b.Id == productId).Count
+
+                            };
+
+                            appUser.Baskets.Add(dbBasket);
+
+
+
+                        }
+                        await _context.SaveChangesAsync();
+
+
+
+
+                    }
+
+
+
+
+
+                   
+                }
+                return Ok();
             }
             
         }

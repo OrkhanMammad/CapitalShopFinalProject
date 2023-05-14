@@ -1,0 +1,22 @@
+﻿@model ProductType
+<div class="row">
+    <div class="col-lg-4">
+        <h1 class="h3 mb-4 text-gray-800">Product Type Create Page</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Name</label>
+                <input asp-for="Name" class="form-control">
+                <span asp-validation-for="Name"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+    </div>
+</div>
+

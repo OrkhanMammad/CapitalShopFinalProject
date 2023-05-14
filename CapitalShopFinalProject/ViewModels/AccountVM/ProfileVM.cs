@@ -37,6 +37,8 @@ namespace CapitalShopFinalProject.ViewModels.AccountVM
 
         public IEnumerable<Address>? Addresses { get; set; }
 
+        public IEnumerable<Order>? Orders { get; set; }
+
 
 
 

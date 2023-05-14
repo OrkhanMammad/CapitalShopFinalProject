@@ -1,0 +1,95 @@
+﻿@model OrderVM
+@{
+    int a = 0;
+}
+<main>
+    <section id="checkout-all">
+        <div class="checkout-content container">
+            <div class="checkout ">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly"></div>
+
+                    <h2 class="py-2">Billing Address</h2>
+                    <!--  Name inputs -->
+                    <div class="form-outline mb-4 w-45">
+                        <input asp-for="Order.Name" type="text" id="form2Example1" class="form-control" />
+                        <label class="form-label" for="form2Example1">First Name</label>
+                    </div>
+                    <div class="form-outline mb-4 w-45 m-60">
+                        <input asp-for="Order.Surname" type="text" id="form2Example2" class="form-control" />
+                        <label class="form-label" for="form2Example2">Last Name</label>
+                    </div>
+                    <!-- Email input -->
+                    <div class="form-outline mb-4 ">
+                        <input asp-for="Order.Email" type="email" id="form2Example3" class="form-control" />
+                        <label class="form-label" for="form2Example3">Email address</label>
+                    </div>
+                    <!-- UserName Input -->
+                    <div class="form-outline mb-4">
+                        <input asp-for="Order.AddressLine" type="text" id="form2Example8" class="form-control" />
+                        <label class="form-label" for="form2Example8">Address1</label>
+                    </div>
+                    
+                    <div class="form-outline mb-4 ">
+                        <select asp-for="Order.Country" class="form-select" id="form2Example12" name="form2Example12" aria-label="Default select example">
+                            <option selected>Azerbaijan</option>
+                            <option value="1">Turkey</option>
+                            
+
+                        </select>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <input asp-for="Order.City" type="text" id="form2Example10" class="form-control" />
+                        <label class="form-label" for="form2Example10">Town/City</label>
+                    </div>
+                    <div class="form-outline mb-4 w-45">
+                        <input asp-for="Order.State" type="text" id="form2Example11" class="form-control" />
+                        <label class="form-label" for="form2Example11">State</label>
+                    </div>
+                    <div class="form-outline mb-4 w-45 m-60">
+                        <input asp-for="Order.PostalCode" type="text" id="form2Example12" class="form-control" />
+                        <label class="form-label" for="form2Example12">Zip Code</label>
+                    </div>
+                    <button type="submit">Place Order</button>
+                    <hr>
+                </form>
+            </div>
+            <div class="checkout-cart">
+                <h2 class="py-2">Cart Total</h2>
+                <div class="checkout-cart-pricebox">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col"><h5 class="fw-bold">Products</h5></th>
+                                <th scope="col"><h5 class="fw-bold">Total</h5></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            @foreach(BasketVM basketVM in Model.BasketVMs)
+                            {
+                                @(a+=(int)(basketVM.Count*basketVM.DiscountedPrice))
+                                <tr>
+                                    <td>
+                                        <span>@basketVM.Title</span>    <span>x @basketVM.Count</span>
+                                    </td>
+                                    <td>@basketVM.DiscountedPrice$</td>
+                                </tr>
+                            }
+                            
+                            <tr>
+                                <td>
+                                    <h5 class="fw-bold ">Total</h5>
+                                </td>
+                                <td>@a$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+</main>

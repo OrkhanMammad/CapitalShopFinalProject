@@ -1,4 +1,5 @@
 ﻿using CapitalShopFinalProject.Models;
+using CapitalShopFinalProject.ViewModels.AccountVM;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,34 +21,131 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
         }
 
         //[HttpGet]
-        //public async Task<IActionResult> createRole() 
-        //{
-        //    await _roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
-        //    await _roleManager.CreateAsync(new IdentityRole("Admin"));
-        //    await _roleManager.CreateAsync(new IdentityRole("Member"));
-        //    return Content("Succesfull");
 
-            
-        //}
-        //[HttpGet]
         //public async Task<IActionResult> createUser()
         //{
         //    AppUser appUser = new AppUser
         //    {
-        //        FullName= "Orxan Mammadli",
-        //        Email="superadmin@gmail.com",
-        //        UserName="SuperAdmin"
-        //    };
-        //    await _userManager.CreateAsync(appUser, "Orxan6991");
-        //    await _userManager.AddToRoleAsync(appUser, "SuperAdmin");
+        //        Email = "SuperAdmin@gmail.com",
+        //        UserName = "SuperAdmin",
+        //        Name = "Super",
+        //        SurName = "Admin"
 
-        //    return Content("Succesfull");
+        //    };
+
+
+        //    await _userManager.CreateAsync(appUser, "Super123");
+        //    await _userManager.AddToRoleAsync(appUser, "SuperAdmin");
+        //    return Content("ok");
+        //    AppUser appUser = new AppUser
+        //    {
+        //        Email = "Admin1@gmail.com",
+        //        UserName = "Admin1",
+        //        Name = "Admin1",
+        //        SurName = "Admin1ov"
+
+        //    };
+
+
+        //    await _userManager.CreateAsync(appUser, "Admin111");
+        //    await _userManager.AddToRoleAsync(appUser, "Admin");
+        //    return Content("ok");
 
 
         //}
 
-        
 
+
+
+
+        [HttpGet]
+      public async Task<IActionResult> SignIn()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("SuperAdmin") || User.IsInRole("SuperAdmin"))
+                {
+                    return RedirectToAction("Index", "Dashboard", "Manage");
+                }
+
+
+            }
+
+            return View();
+
+
+        }
+        [HttpPost]
+
+        public async Task<IActionResult> SignIn(SignInVM signInVM)
+        {
+            
+
+
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "E-Mail or Password is not correct");
+                return View(signInVM);
+            }
+
+            AppUser appUser=await _userManager.FindByEmailAsync(signInVM.Email);
+            if (appUser == null)
+            {
+                ModelState.AddModelError("", "E-Mail or Password is not correct");
+                return View(signInVM);
+            }
+
+            Microsoft.AspNetCore.Identity.SignInResult signInResult = await _signInManager.PasswordSignInAsync(appUser, signInVM.Password, true, true);
+
+            if (signInResult.IsLockedOut)
+            {
+                ModelState.AddModelError("", "Account has been blocked");
+                return View(signInVM);
+            }
+
+            if (!signInResult.Succeeded)
+            {
+                ModelState.AddModelError("", "E-Mail or Password is not correct");
+                return View(signInVM);
+            }
+
+            if(await _userManager.IsInRoleAsync(appUser, "SuperAdmin")==false) 
+            {
+                if (await _userManager.IsInRoleAsync(appUser, "Admin") == false)
+                {
+                    if (await _userManager.IsInRoleAsync(appUser, "Member") == true)
+                    {
+
+                        //return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Home", new { area = "" });
+
+                    }
+                    else{
+                        ModelState.AddModelError("", "E-Mail or Password is not correct");
+                        return View(signInVM);
+                    }
+
+                    
+                    
+                }
+            }
+
+           
+
+            
+            
+
+
+            return RedirectToAction("Index", "Dashboard", "Manage");
+
+
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("SignIN", "Account");
+        }
 
 
 

@@ -1,0 +1,84 @@
+﻿@{
+    Layout = null;
+}
+
+@model SignInVM
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>DASHMIN - Bootstrap Admin Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="~/manage/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/manage/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/manage/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="~/manage/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+<main>
+    <div class="login-all">
+        <div class="login-main">
+            <div class="login-header">
+                <h5>Login</h5>
+                <p>Enter Login details to get access</p>
+            </div>
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text text-danger"></div>
+                <div class="login-input-box">
+                    <p>Email Address</p>
+                    <input asp-for="Email" type="text" placeholder="Email address">
+                    <span asp-validation-for="Email" class="text text-danger"></span>
+
+                    <p>Password</p>
+                    <input asp-for="Password" type="password" placeholder="Password">
+                    <span asp-validation-for="Password" class="text text-danger"></span>
+                    <a class="forgotpassword" href="">Forgot Password?</a>
+                </div>
+                <div class="login-bottom">
+                    <p>Don’t have an account? <a href="">Sign Up</a> here</p>
+                    <button type="submit">Login</button>
+                </div>
+
+            </form>
+
+
+
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+
+
+</main>
+    <script src="~/manage/js/main.js"></script>
+</body>
+</html>

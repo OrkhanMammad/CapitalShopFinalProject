@@ -1,0 +1,30 @@
+﻿@model Category
+
+<div class="container">
+    <div style="padding:40px;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Category Image</th>
+                <th scope="col">Category Name</th>
+                <th scope="col">Created By</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Updated By</th>
+                <th scope="col">Updated At</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><img style="width:60px;" src="~/assets/Images/home/category-banner/@Model.Image" /></td>
+                <td>@Model.Name</td>
+                <td>@Model.CreatedBy</td>
+                <td>@Model.CreatedAt</td>
+                <td>@Model.UpdatedBy</td>
+                <td>@Model.UpdatedAt</td>
+                <td><a asp-area="manage" asp-controller="category" asp-action="delete" asp-route-categoryId="@Model.ID" class="btn btn-danger">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>

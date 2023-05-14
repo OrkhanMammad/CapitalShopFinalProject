@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Manage\Views\" />
-    <Folder Include="wwwroot\" />
+    <Folder Include="Areas\Manage\ViewModels\" />
+    <Folder Include="wwwroot\manage\" />
   </ItemGroup>
 
 </Project>

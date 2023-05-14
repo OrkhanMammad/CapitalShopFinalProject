@@ -171,7 +171,7 @@ namespace CapitalShopFinalProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<int>("Count")
+                    b.Property<int?>("Count")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedAt")
@@ -192,7 +192,7 @@ namespace CapitalShopFinalProject.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("bit");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -203,7 +203,6 @@ namespace CapitalShopFinalProject.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ID");
@@ -238,7 +237,6 @@ namespace CapitalShopFinalProject.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsDeleted")
@@ -436,6 +434,9 @@ namespace CapitalShopFinalProject.Migrations
 
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -956,15 +957,11 @@ namespace CapitalShopFinalProject.Migrations
                 {
                     b.HasOne("CapitalShopFinalProject.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("CapitalShopFinalProject.Models.AppUser", "User")
                         .WithMany("Baskets")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Product");
 
@@ -983,7 +980,7 @@ namespace CapitalShopFinalProject.Migrations
             modelBuilder.Entity("CapitalShopFinalProject.Models.OrderItem", b =>
                 {
                     b.HasOne("CapitalShopFinalProject.Models.Order", "Order")
-                        .WithMany()
+                        .WithMany("OrderItems")
                         .HasForeignKey("OrderId");
 
                     b.HasOne("CapitalShopFinalProject.Models.Product", "Product")
@@ -1120,6 +1117,11 @@ namespace CapitalShopFinalProject.Migrations
             modelBuilder.Entity("CapitalShopFinalProject.Models.Category", b =>
                 {
                     b.Navigation("products");
+                });
+
+            modelBuilder.Entity("CapitalShopFinalProject.Models.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("CapitalShopFinalProject.Models.Product", b =>

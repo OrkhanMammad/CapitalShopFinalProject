@@ -13,6 +13,8 @@ a {
 }
 
 
+
+
 /* header top starts */
 .header-all a:hover {
     color: #74706b;
@@ -1904,6 +1906,7 @@ color: white !important;
     width: 30%;
     margin-bottom: 30px;
     position: relative;
+    max-height: 320px;
 }
 
 .product-box-listed .products-image-listed {
@@ -3095,4 +3098,87 @@ MYACCOUNT PAGE STARTS HERE */
     margin-bottom: 40px !important;
 }
 
+
+
+.checkout-content {
+    display: flex;
+    justify-content: space-between;
+    margin: 4rem auto;
+}
+
+    .checkout-content .checkout {
+        width: 60%;
+    }
+
+    .checkout-content .checkout-cart {
+        width: 35%;
+    }
+
+        .checkout-content .checkout-cart button {
+            font-family: "Poppins", Sans-serif;
+            font-size: 15px !important;
+            font-weight: 500 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.5px !important;
+            color: #FFFFFF !important;
+            background-color: #0F4C75 !important;
+            padding: 9px 15px !important;
+            transition: 0.3s !important;
+            width: 50% !important;
+            text-align: center !important;
+            display: block !important;
+            margin: 10px auto !important;
+        }
+
+            .checkout-content .checkout-cart button:hover {
+                color: #0F4C75;
+                background-color: #FFFFFF;
+            }
+
+@media only screen and (max-width: 576px) {
+
+    .checkout-content .form-outline {
+        width: 100% !important;
+        margin: 0 auto;
+    }
+
+    .checkout-content {
+        display: block;
+    }
+
+        .checkout-content .checkout {
+            width: 100% !important;
+        }
+
+    .checkout-cart {
+        width: 100% !important;
+    }
+
+    .table th:nth-child(3) {
+        padding: 0 5rem;
+    }
+
+    .table th:nth-child(4) {
+        padding: 0 1rem;
+    }
+
+    .table th:nth-child(6) {
+        padding: 0 0.5rem;
+    }
+
+    .table th:nth-child(7) {
+        padding: 0 0.5rem;
+    }
+}
+
+
+.table tr {
+    cursor: pointer;
+}
+
+.hiddenRow {
+    padding: 0 4px !important;
+    background-color: #eeeeee;
+    font-size: 13px;
+}
 

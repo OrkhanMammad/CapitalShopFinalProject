@@ -31,7 +31,7 @@ namespace CapitalShopFinalProject.Models
 
         public string? Comment { get; set; }
 
-        public IEnumerable<OrderItem> OrderItems { get; set;}
+        public IEnumerable<OrderItem>? OrderItems { get; set;}
 
 
     }

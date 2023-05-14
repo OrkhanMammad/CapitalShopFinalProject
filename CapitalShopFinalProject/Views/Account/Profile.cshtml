@@ -66,40 +66,63 @@
                                         <div class="myaccount-content">
                                             <h3>Orders</h3>
                                             <div class="myaccount-table table-responsive text-center">
-                                                <table class="table table-bordered">
-                                                    <thead class="thead-light">
+                                                <table class="table table-condensed" style="border-collapse:collapse;">
+                                                    <thead>
                                                         <tr>
-                                                            <th>Order</th>
+                                                            <th>#</th>
                                                             <th>Date</th>
                                                             <th>Status</th>
-                                                            <th>Total</th>
-                                                            <th>Action</th>
+                                                            <th>Total Amount</th>
+                                                            
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>Aug 22, 2018</td>
-                                                            <td>Pending</td>
-                                                            <td>$3000</td>
-                                                            <td><a href="cart.html" class="btn ">View</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>July 22, 2018</td>
-                                                            <td>Approved</td>
-                                                            <td>$200</td>
-                                                            <td><a href="cart.html" class="btn ">View</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>June 12, 2017</td>
-                                                            <td>On Hold</td>
-                                                            <td>$990</td>
-                                                            <td><a href="cart.html" class="btn ">View</a></td>
-                                                        </tr>
+                                                        @{
+                                                            int a = 1;
+                                                            int? b = 0;          
+                                                        }
+
+                                                        @foreach(Order? order in Model.Orders)
+                                                        {
+                                                            
+
+                                                            <tr id="@order.ID" data-bs-toggle="collapse" data-target="#demo1" class="accordion-toggle orderClick">
+                                                                <td>@a</td>
+                                                                <td>@order.CreatedAt</td>
+                                                                <td>@order.Status</td>
+                                                                <td class="text-success">
+                                                                    
+                                                                    @if (order.OrderItems != null)
+                                                                    {
+                                                                        foreach(OrderItem orderItem in order.OrderItems)
+                                                                        {
+                                                                            b += (int)orderItem.Price * orderItem.Count;
+                                                                        }
+                                                                    }
+                                                                    $@b
+                                                                </td>
+                                                                
+                                                            </tr>
+                                                            <tr>
+                                                                <td id="@order.ID" class="hiddenRow orderDesc">
+                                                                    <div class="d-none" id="">
+                                                                        @foreach(OrderItem orderItem in order.OrderItems)
+                                                                        {
+                                                                            <p><span>@orderItem.Title</span> <span>* @orderItem.Count</span></p>
+                                                                        }
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            
+                                                                a++;
+                                                            
+                                                        }
+
                                                     </tbody>
                                                 </table>
+
+
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -108,28 +131,17 @@
                                     <div class="tab-pane fade" id="address-edit" role="tabpanel">
                                         <div class="myaccount-content">
                                             <h3>Billing Address</h3>
-                                            <a  class="check-btn sqr-btn add-address ">
-                                                <i class="fa fa-edit"></i> Add
-                                                Address
-                                            </a>
-                                            <div class="add-address-form d-none">
-                                                @await Html.PartialAsync("_AddAddressPartial", new Address())
-
-                                            </div>
                                             <div class="addressContainer row">
-                                                @if (Model.Addresses!=null && Model.Addresses.Count()>0)
+                                                @if (Model.Addresses != null && Model.Addresses.Count() > 0)
                                                 {
-                                                    @foreach(Address address in Model.Addresses)
+                                                    @foreach (Address address in Model.Addresses)
                                                     {
-                                                        
+
                                                         <div class="mt-30 col-lg-3">
                                                             <h6>@($"{address.Country} {address.City}")</h6>
                                                             <p>@address.AddressLIne</p>
                                                             <p> Postal Code: @address.PostalCode</p>
-                                                            <a class="check-btn sqr-btn ">
-                                                                <i class="fa fa-edit"></i> Edit
-                                                                Address
-                                                            </a>
+
                                                         </div>
 
                                                     }
@@ -139,6 +151,15 @@
 
 
                                             </div>
+                                            <a  class="check-btn sqr-btn add-address ">
+                                                <i class="fa fa-edit"></i> Add
+                                                Address
+                                            </a>
+                                            <div class="add-address-form mt-5 d-none">
+                                                @await Html.PartialAsync("_AddAddressPartial", new Address())
+
+                                            </div>
+                                          
                                             
                                         </div>
                                     </div>

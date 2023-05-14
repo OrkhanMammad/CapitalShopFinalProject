@@ -53,6 +53,7 @@ namespace CapitalShopFinalProject.Controllers
                 SurName=registerVM.Surname,
                 Email = registerVM.Email,
                 UserName= registerVM.UserName
+                
             };
 
           IdentityResult identityResult =  await _userManager.CreateAsync(appUser, registerVM.Password);
@@ -126,11 +127,13 @@ namespace CapitalShopFinalProject.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "Member")]
+        
         public async Task<IActionResult> Profile()
         {
-            AppUser appUser = await _userManager.Users.
-                Include(u => u.Addresses.Where(a => a.IsDeleted == false))
+            AppUser appUser = await _userManager.Users
+                .Include(u => u.Addresses.Where(a => a.IsDeleted == false))
+                .Include(u=>u.Orders)
+                .ThenInclude(o=>o.OrderItems)
                 .FirstOrDefaultAsync(u => u.NormalizedUserName == User.Identity.Name.ToUpperInvariant());
 
             ProfileVM profileVM = new ProfileVM
@@ -140,6 +143,8 @@ namespace CapitalShopFinalProject.Controllers
                 Surname=appUser.SurName,
                 Email=appUser.Email,
                 UserName=appUser.UserName,
+                Orders=appUser.Orders,
+                
             };
 
             return View(profileVM);
@@ -272,7 +277,7 @@ namespace CapitalShopFinalProject.Controllers
                 
 
             }
-
+            address.IsDeleted = false;
             address.AppUserId = appUser.Id;
             address.CreatedBy = $"{appUser.Name} {appUser.SurName}";
             address.CreatedAt= DateTime.UtcNow.AddHours(4);
