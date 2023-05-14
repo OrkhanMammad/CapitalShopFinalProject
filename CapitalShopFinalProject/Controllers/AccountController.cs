@@ -1,11 +1,13 @@
 ﻿using CapitalShopFinalProject.DataAccessLayer;
 using CapitalShopFinalProject.Models;
 using CapitalShopFinalProject.ViewModels.AccountVM;
+using CapitalShopFinalProject.ViewModels.BasketVM;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace CapitalShopFinalProject.Controllers
 {
@@ -118,7 +120,14 @@ namespace CapitalShopFinalProject.Controllers
                 return View(signInVM);
             }
 
-           return RedirectToAction("Index", "Home");
+
+
+
+            HttpContext.Response.Cookies.Append("basket", "");
+
+
+
+            return RedirectToAction("Index", "Home");
 
 
 

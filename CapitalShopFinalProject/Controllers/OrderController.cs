@@ -51,6 +51,7 @@ namespace CapitalShopFinalProject.Controllers
                 Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == basketVM.Id);
                 basketVM.DiscountedPrice = product.DiscountedPrice;
                 basketVM.Title= product.Title;
+               
                 
             }
 
@@ -107,6 +108,7 @@ namespace CapitalShopFinalProject.Controllers
                 Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == basketVM.Id);
                 basketVM.DiscountedPrice = product.DiscountedPrice;
                 basketVM.Title = product.Title;
+                product.Count-=basketVM.Count;
             }
 
             OrderVM orderVM1 = new OrderVM

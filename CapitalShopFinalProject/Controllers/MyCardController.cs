@@ -1,6 +1,7 @@
 ﻿using CapitalShopFinalProject.DataAccessLayer;
 using CapitalShopFinalProject.Models;
 using CapitalShopFinalProject.ViewModels.BasketVM;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -10,31 +11,74 @@ namespace CapitalShopFinalProject.Controllers
     public class MyCardController : Controller
     {
         private readonly AppDbContext _context;
-        public MyCardController(AppDbContext context)
+        private readonly UserManager<AppUser> _userManager;
+        public MyCardController(AppDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
-        public IActionResult Index()
+        public async Task<IActionResult>  Index()
         {
             string Basket = HttpContext.Request.Cookies["basket"];
-            if (string.IsNullOrEmpty(Basket))
+
+
+            if (User.Identity.IsAuthenticated && string.IsNullOrEmpty(Basket))
             {
-                List<BasketVM> BasketList=new List<BasketVM>();
-                return View(BasketList);
-            }
-            else 
-            {
-                List<BasketVM> BasketList = JsonConvert.DeserializeObject<List<BasketVM>>(Basket);
+                AppUser appuser = await _userManager.Users.Include(u => u.Baskets.Where(b => b.IsDeleted == false))
+                            .FirstOrDefaultAsync(u => u.NormalizedUserName == User.Identity.Name.ToUpperInvariant());
+
+                IEnumerable<Basket> BasketsDBs = appuser.Baskets.ToList();
+                List<BasketVM> BasketList = new List<BasketVM>();
                 ViewBag.ProductsTotal = 0;
-                foreach (BasketVM basketVM in BasketList)
+
+                foreach (Basket basket in BasketsDBs)
                 {
-                    ViewBag.ProductsTotal += basketVM.Count * basketVM.DiscountedPrice;
+                    BasketVM basketVM = new BasketVM
+                    {
+                        Id = basket.ProductId,
+                        Image = basket.Image,
+                        Title = basket.Title,
+                        DiscountedPrice = basket.DiscountedPrice,
+                        Count = basket.Count,
+                    };
+
+                    ViewBag.ProductsTotal += basket.Count * basket.DiscountedPrice;
+                    BasketList.Add(basketVM);
                 }
 
 
+                string srzdProducts = JsonConvert.SerializeObject(BasketList);
+                HttpContext.Response.Cookies.Append("basket", srzdProducts);
                 return View(BasketList);
+            }
 
-            }  
+            else
+            {
+                if (string.IsNullOrEmpty(Basket))
+                {
+                    List<BasketVM> BasketList = new List<BasketVM>();
+                    return View(BasketList);
+                }
+                else 
+                {
+                    List<BasketVM> BasketList = JsonConvert.DeserializeObject<List<BasketVM>>(Basket);
+                    ViewBag.ProductsTotal = 0;
+                    foreach (BasketVM basketVM in BasketList)
+                    {
+                        ViewBag.ProductsTotal += basketVM.Count * basketVM.DiscountedPrice;
+                    }
+
+
+                    return View(BasketList);
+
+                }
+
+            }
+
+
+
+           
+            
         }
         public async Task<IActionResult> CardIncreaseCount(int? cardItemId)
         {
@@ -58,11 +102,27 @@ namespace CapitalShopFinalProject.Controllers
                 HttpContext.Response.Cookies.Append("basket", srzdProducts);
             }
 
+            if (User.Identity.IsAuthenticated)
+            {
+                AppUser appuser = await _userManager.Users.Include(u => u.Baskets.Where(b => b.IsDeleted == false))
+                            .FirstOrDefaultAsync(u => u.NormalizedUserName == User.Identity.Name.ToUpperInvariant());
+
+                IEnumerable<Basket> BasketsDB = await _context.Baskets.ToListAsync();
+
+                if (product.Count > BasketsDB.FirstOrDefault(b => b.ProductId == cardItemId && b.UserId == appuser.Id).Count)
+                {
+                    BasketsDB.FirstOrDefault(b => b.ProductId == cardItemId && b.UserId == appuser.Id).Count += 1;
+                }
+
+
+                await _context.SaveChangesAsync();
+            }
+
 
 
             return PartialView("_MyCardPartialView", BasketList);
         }
-        public IActionResult CardDecreaseCount(int? cardItemId)
+        public async Task<IActionResult>  CardDecreaseCount(int? cardItemId)
         {
 
             string Basket = HttpContext.Request.Cookies["basket"];
@@ -84,12 +144,33 @@ namespace CapitalShopFinalProject.Controllers
             }
 
 
+            if (User.Identity.IsAuthenticated)
+            {
+                AppUser appuser = await _userManager.Users.Include(u => u.Baskets.Where(b => b.IsDeleted == false))
+                            .FirstOrDefaultAsync(u => u.NormalizedUserName == User.Identity.Name.ToUpperInvariant());
+
+                IEnumerable<Basket> BasketsDB = await _context.Baskets.ToListAsync();
+                if(BasketsDB.FirstOrDefault(b => b.ProductId == cardItemId && b.UserId == appuser.Id).Count > 1)
+                {
+                    BasketsDB.FirstOrDefault(b => b.ProductId == cardItemId && b.UserId == appuser.Id).Count -= 1;
+                }
+                
+                await _context.SaveChangesAsync();
+            }
+
+
 
             return PartialView("_MyCardPartialView", BasketList);
         }
 
-        public IActionResult CardDelete(int? cardItemId)
+        public async Task<IActionResult>  CardDelete(int? cardItemId)
         {
+            if(cardItemId == null)
+            {
+                return BadRequest();
+            }
+
+
             string Basket = HttpContext.Request.Cookies["basket"];
             List<BasketVM> BasketList = JsonConvert.DeserializeObject<List<BasketVM>>(Basket);
             ViewBag.ProductsTotal = 0;
@@ -104,6 +185,21 @@ namespace CapitalShopFinalProject.Controllers
                 }
                 string srzdProducts = JsonConvert.SerializeObject(BasketList);
                 HttpContext.Response.Cookies.Append("basket", srzdProducts);
+            }
+
+
+            if (User.Identity.IsAuthenticated)
+            {
+                AppUser appuser = await _userManager.Users.Include(u => u.Baskets.Where(b => b.IsDeleted == false))
+                            .FirstOrDefaultAsync(u => u.NormalizedUserName == User.Identity.Name.ToUpperInvariant());
+
+                IEnumerable<Basket> BasketsDB = await _context.Baskets.ToListAsync();
+                Basket deletingBasketdb = BasketsDB.FirstOrDefault(b => b.ProductId == cardItemId && b.UserId==appuser.Id);
+
+
+                    _context.Baskets.Remove(deletingBasketdb);
+
+                    await _context.SaveChangesAsync();
             }
 
 

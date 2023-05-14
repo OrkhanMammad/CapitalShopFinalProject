@@ -69,8 +69,12 @@ namespace CapitalShopFinalProject.Controllers
                         {
                             Basket dbBasket = new Basket
                             {
+                                Image=newBasketItem.MainImage,
+                                Title=newBasketItem.Title,
+                                DiscountedPrice=newBasketItem.DiscountedPrice,
                                 ProductId = productId,
-                                Count = BasketList.FirstOrDefault(b => b.Id == productId).Count
+                                Count = BasketList.FirstOrDefault(b => b.Id == productId).Count,
+                                IsDeleted = false
 
                             };
 
@@ -138,7 +142,9 @@ namespace CapitalShopFinalProject.Controllers
                             Basket dbBasket= new Basket
                             {
                                 ProductId=productId,
-                                Count= BasketList.FirstOrDefault(b => b.Id == productId).Count
+                                Count= BasketList.FirstOrDefault(b => b.Id == productId).Count,
+                                IsDeleted=false
+                                
 
                             };
 

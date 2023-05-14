@@ -2,7 +2,13 @@
 {
     public class Basket : BaseEntity
     {
-       public int? Count { get; set; }
+        
+        public string? Image { get; set; }
+
+        public string? Title { get; set; }
+
+        public double? DiscountedPrice { get; set; }
+       public int Count { get; set; }
 
         public int? ProductId { get; set; }
 
