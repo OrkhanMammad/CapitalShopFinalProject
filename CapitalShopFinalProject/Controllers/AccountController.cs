@@ -127,7 +127,7 @@ namespace CapitalShopFinalProject.Controllers
 
 
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Mycard");
 
 
 

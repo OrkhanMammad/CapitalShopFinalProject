@@ -140,7 +140,9 @@ namespace CapitalShopFinalProject.Controllers
                         else
                         {
                             Basket dbBasket= new Basket
-                            {
+                            {   Title=newBasketItem.Title,
+                                DiscountedPrice=newBasketItem.DiscountedPrice,
+                                Image=newBasketItem.MainImage,
                                 ProductId=productId,
                                 Count= BasketList.FirstOrDefault(b => b.Id == productId).Count,
                                 IsDeleted=false

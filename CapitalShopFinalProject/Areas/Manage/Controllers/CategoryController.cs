@@ -14,12 +14,9 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
     [Authorize(Roles = "Admin,SuperAdmin")]
     public class CategoryController : Controller
     {
-        
-
         private readonly AppDbContext _context;
         private readonly UserManager<AppUser> _userManager;
         private readonly IWebHostEnvironment _env;
-
         public CategoryController(AppDbContext context, UserManager<AppUser> userManager, IWebHostEnvironment env)
         {
             _context= context;
@@ -32,9 +29,6 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
         public async Task<IActionResult>  Index()
         {
             IEnumerable<Category> Categories= await _context.Categories.Where(c=>c.IsDeleted==false).ToListAsync();
-
-
-
             return View(Categories);
         }
 
@@ -43,9 +37,7 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
         public async Task<IActionResult> Create()
         {
             Category category = new Category();
-
             return View(category);
-
         }
 
         [HttpPost]
@@ -70,9 +62,7 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
                 return View(category);
             }
 
-            
-
-            
+       
 
             IEnumerable<Category> Categories = await _context.Categories.Where(c => c.IsDeleted == false).ToListAsync();
             if(Categories.Any(c=>c.Name.ToString().Trim().ToLower()==category.Name.ToString().Trim().ToLower())) 
@@ -102,10 +92,6 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
 
             await _context.Categories.AddAsync(category);
             await _context.SaveChangesAsync();
-
-
-
-
 
             return View();
 
@@ -147,6 +133,7 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
              _context.Categories.FirstOrDefault(c=>c.ID==categoryId).IsDeleted = true;
 
             IEnumerable<Product> products = await _context.Products.Where(p => p.IsDeleted == false).ToListAsync();
+            IEnumerable<Basket> basketsDB = await _context.Baskets.Where(b => b.IsDeleted == false).ToListAsync();
            if(products.Any(p => p.CategoryId == categoryId))
             {
                 foreach(Product product in products)
@@ -154,6 +141,14 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
                     if(product.CategoryId == categoryId)
                     {
                         product.IsDeleted = true;
+                        foreach(Basket basket in basketsDB)
+                        {
+                            if (basket.ProductId == product.ID)
+                            {
+                                _context.Baskets.Remove(basket);
+                            }
+                        }
+                        
                     }
                     
                 }

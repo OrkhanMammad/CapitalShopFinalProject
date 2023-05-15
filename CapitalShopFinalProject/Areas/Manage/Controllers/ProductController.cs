@@ -39,14 +39,71 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
         }
 
 
-        //public async Task<IActionResult> DeleteDetail(int? productId)
-        //{
+        public async Task<IActionResult> DeleteDetail(int? productId)
+        {
+            if (productId == null)
+            {
+                return BadRequest();
+            }
+
+            Product product = await _context.Products.Include(p => p.ProductImages.Where(pi => pi.IsDeleted == false)).FirstOrDefaultAsync(p => p.IsDeleted == false);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            Category category = await _context.Categories.FirstOrDefaultAsync(c => c.ID == product.CategoryId);
+            ProductType productType = await _context.ProductTypes.FirstOrDefaultAsync(p => p.ID == product.ProductTypeId);
+            ViewBag.Category=category.Name;
+            ViewBag.ProductType = productType.Name;
+            return View(product);
 
 
 
+        }
 
-        //}
+        public async Task<IActionResult> Detail(int? productId)
+        {
+            if(productId == null)
+            {
+                return BadRequest();
+            }
 
+
+            Product product = await _context.Products.Include(p => p.ProductImages.Where(pi => pi.IsDeleted == false)).FirstOrDefaultAsync(p => p.IsDeleted == false);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            Category category = await _context.Categories.FirstOrDefaultAsync(c => c.ID == product.CategoryId);
+            ProductType productType = await _context.ProductTypes.FirstOrDefaultAsync(p => p.ID == product.ProductTypeId);
+            ViewBag.Category = category.Name;
+            ViewBag.ProductType = productType.Name;
+            return View(product);
+
+           
+
+        }
+
+        public async Task<IActionResult> Delete(int? productId)
+        {
+            if(productId == null)
+            {
+                return BadRequest();
+            }
+
+            Product product = await _context.Products.FirstOrDefaultAsync(p => p.IsDeleted == false);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            _context.Products.FirstOrDefault(p =>p.ID==productId).IsDeleted=true;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("index");
+
+        }
 
     }
 }

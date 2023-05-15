@@ -1,0 +1,34 @@
+﻿@model Product
+
+<div class="container">
+    <div style="padding:40px;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Main Image</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Discounted Price</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Created By</th>
+                    <th scope="col">Created At</th>
+                    <th scope="col">Updated By</th>
+                    <th scope="col">Updated At</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img style="width:60px;" src="~/assets/Images/products/@Model.MainImage" /></td>
+                    <td>@Model.Title</td>
+                    <td>$@Model.DiscountedPrice</td>
+                    <td>@ViewBag.Category</td>
+                    <td>@ViewBag.ProductType</td>
+                    <td>@Model.CreatedBy</td>
+                    <td>@Model.CreatedAt</td>
+                    <td>@Model.UpdatedBy</td>
+                    <td>@Model.UpdatedAt</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

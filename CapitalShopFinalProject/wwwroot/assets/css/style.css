@@ -3114,21 +3114,21 @@ MYACCOUNT PAGE STARTS HERE */
         width: 35%;
     }
 
-        .checkout-content .checkout-cart button {
-            font-family: "Poppins", Sans-serif;
-            font-size: 15px !important;
-            font-weight: 500 !important;
-            text-transform: uppercase !important;
-            letter-spacing: 1.5px !important;
-            color: #FFFFFF !important;
-            background-color: #0F4C75 !important;
-            padding: 9px 15px !important;
-            transition: 0.3s !important;
-            width: 50% !important;
-            text-align: center !important;
-            display: block !important;
-            margin: 10px auto !important;
-        }
+.placeOrder {
+    font-family: "Poppins", Sans-serif;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    color: #FFFFFF !important;
+    background-color: #0F4C75 !important;
+    padding: 5px 15px !important;
+    transition: 0.3s !important;
+    width: 20% !important;
+    text-align: center !important;
+    display: block !important;
+    margin: 10px auto !important;
+}
 
             .checkout-content .checkout-cart button:hover {
                 color: #0F4C75;

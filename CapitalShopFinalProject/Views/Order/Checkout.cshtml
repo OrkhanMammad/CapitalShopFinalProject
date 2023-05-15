@@ -50,7 +50,7 @@
                         <input asp-for="Order.PostalCode" type="text" id="form2Example12" class="form-control" />
                         <label class="form-label" for="form2Example12">Zip Code</label>
                     </div>
-                    <button type="submit">Place Order</button>
+                    <button class="placeOrder" type="submit">Place Order</button>
                     <hr>
                 </form>
             </div>
@@ -68,7 +68,7 @@
                             
                             @foreach(BasketVM basketVM in Model.BasketVMs)
                             {
-                                @(a+=(int)(basketVM.Count*basketVM.DiscountedPrice))
+                                a += (int)(basketVM.Count * basketVM.DiscountedPrice);
                                 <tr>
                                     <td>
                                         <span>@basketVM.Title</span>    <span>x @basketVM.Count</span>

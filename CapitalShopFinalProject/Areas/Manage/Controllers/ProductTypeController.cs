@@ -111,7 +111,7 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
             }
 
             _context.ProductTypes.FirstOrDefault(pt => pt.ID == productTypeId).IsDeleted = true;
-
+            IEnumerable<Basket> basketsDB = await _context.Baskets.Where(b => b.IsDeleted == false).ToListAsync();
             IEnumerable<Product> Products = await _context.Products.Where(p => p.IsDeleted == false).ToListAsync();
             if (Products.Any(p => p.ProductTypeId == productTypeId))
             {
@@ -120,6 +120,13 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
                     if (product.ProductTypeId == productTypeId)
                     {
                         product.IsDeleted = true;
+                        foreach (Basket basket in basketsDB)
+                        {
+                            if (basket.ProductId == product.ID)
+                            {
+                                _context.Baskets.Remove(basket);
+                            }
+                        }
                     }
                 }
 
