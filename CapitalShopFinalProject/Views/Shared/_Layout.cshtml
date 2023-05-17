@@ -129,11 +129,11 @@
             <a class="mobile-menu-btn" asp-action="index" asp-controller="wishlist">Wishlist</a>
             @if (User.Identity.IsAuthenticated)
             {
-                <a class="mobile-menu-btn" asp-action="profile" asp-controller="account">Track Your Order</a>
+                <a class="mobile-menu-btn" asp-action="profile" asp-controller="account">My Account</a>
             }
             @if (User.Identity.IsAuthenticated==false)
             {
-                <a class="mobile-menu-btn" asp-action="signin" asp-controller="account">Track Your Order</a>
+                <a class="mobile-menu-btn" asp-action="signin" asp-controller="account">My Account</a>
             }
             
             <a class="mobile-menu-btn" asp-action="index" asp-controller="about">About Us</a>

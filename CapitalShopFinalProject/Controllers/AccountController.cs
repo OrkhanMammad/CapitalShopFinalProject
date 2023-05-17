@@ -228,6 +228,13 @@ namespace CapitalShopFinalProject.Controllers
         [Authorize(Roles = "Member")]
         public async Task<IActionResult> Profile(ProfileVM profileVM)
         {
+            AppUser appUser = await _userManager.Users
+                .Include(u => u.Addresses.Where(a => a.IsDeleted == false))
+                .Include(u => u.CreditCards)
+                .Include(u => u.Orders)
+                .ThenInclude(o => o.OrderItems)
+                .FirstOrDefaultAsync(u => u.NormalizedUserName == User.Identity.Name.ToUpperInvariant());
+            profileVM.Orders = appUser.Orders;
 
             if (!ModelState.IsValid)
             {
@@ -237,7 +244,7 @@ namespace CapitalShopFinalProject.Controllers
             }
             
            
-            AppUser appUser = await _userManager.FindByNameAsync(User.Identity.Name);
+           
 
 
             if(appUser.Name!=profileVM.Name)
@@ -496,13 +503,17 @@ namespace CapitalShopFinalProject.Controllers
             {
                 return RedirectToAction("profile", "account");
             }
+            if(appUser.CreditCards.Count() > 0)
+            {
+                foreach(CreditCard creditCard in appUser.CreditCards)
+                {
+                    creditCard.UserId = null;
+                }
+            }
+
 
             newCreditCard.UserId = appUser.Id;
             await _context.SaveChangesAsync();
-
-
-
-
             return RedirectToAction("profile", "account");
         }
 

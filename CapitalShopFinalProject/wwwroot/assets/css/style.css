@@ -1456,7 +1456,7 @@ a {
 
 .mobile-menu {
     position: absolute;
-    bottom: -323px;
+    bottom: -286px;
     left: 0;
     z-index: 1;
     font-size: 16px;
@@ -1504,6 +1504,17 @@ login page starts here */
     width: 50%;
     border: 1px solid white;
     box-shadow: 0px 10px 30px 0px rgba(13, 12, 13, 0.2)
+}
+
+@media (max-width:992px){
+    .login-main{
+        width:80%;
+    }
+}
+@media (max-width:576px) {
+    .login-main {
+        width: 100%;
+    }
 }
 
 .login-header {
@@ -1617,6 +1628,18 @@ register page starts here */
     justify-content: center;
     flex-wrap: wrap;
 
+}
+
+@media (max-width:992px){
+    .register-main{
+        width:80%;
+    }
+}
+
+@media (max-width:576px) {
+    .register-main {
+        width: 100%;
+    }
 }
 
 .register-header {
@@ -3180,17 +3203,5 @@ MYACCOUNT PAGE STARTS HERE */
 }
 
 
-.table tr {
-    cursor: pointer;
-}
 
-.hiddenRow {
-    padding: 0 4px !important;
-    background-color: #eeeeee;
-    font-size: 13px;
-}
-
-.add-address:hover{
-    color:white !important;
-}
 

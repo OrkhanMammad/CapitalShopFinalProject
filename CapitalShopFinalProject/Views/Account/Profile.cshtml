@@ -1,5 +1,8 @@
 ﻿@model ProfileVM
 
+
+
+
 <main>
     <section>
         <div class="myaccount-header">
@@ -31,8 +34,8 @@
                                         address
                                     </a>
                                     <a href="#payment-card-edit" class="@(ViewBag.CardError == true ? "active" : "")" data-bs-toggle="tab">
-                                        <i class="fa fa-map-marker"></i>
-                                        card
+                                        <i class="fa fa-credit-card"></i>
+                                        payment method
                                     </a>
                                     <a href="#account-info" class="@(ViewBag.Active == true ? "active" : "")" data-bs-toggle="tab">
                                         <i class="fa fa-user"></i> Account
@@ -51,11 +54,7 @@
                                             <h3>Dashboard</h3>
                                             <div class="welcome">
                                                 <p>
-                                                    Hello, <strong></strong> (If Not <strong>
-                                                        
-                                                    </strong><a href="login-register.html" class="logout">
-                                                        Logout
-                                                    </a>)
+                                                    Hello, <strong>@Model.Name @Model.Surname</strong> 
                                                 </p>
                                             </div>
                                             <p class="mb-0">
@@ -70,65 +69,47 @@
                                     <div class="tab-pane fade" id="orders" role="tabpanel">
                                         <div class="myaccount-content">
                                             <h3>Orders</h3>
-                                            <div class="myaccount-table table-responsive text-center">
-                                                <table class="table table-condensed" style="border-collapse:collapse;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Date</th>
-                                                            <th>Status</th>
-                                                            <th>Total Amount</th>
+                                            <table class="table table-condensed" style="border-collapse:collapse;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Date</th>
+                                                        <th>Status</th>
+                                                        <th>Total Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach(Order order in Model.Orders)
+                                                    {
+
+                                                        double? totalAmount = 0;
+
+
+                                                        <tr id="@order.ID" data-bs-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                                                            <td>1</td>
+                                                            <td>@order.CreatedAt.ToString().Split(' ')[0]</td>
+                                                            <td>@order.Status</td>
                                                             
+                                                            @foreach(OrderItem orderItem in order.OrderItems)
+                                                            {
+                                                                totalAmount += orderItem.Count * orderItem.Price;
+                                                            }
+                                                            <td class="text-success">$@totalAmount</td>
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @{
-                                                            int a = 1;
-                                                            int? b = 0;          
-                                                        }
-
-                                                        @foreach(Order? order in Model.Orders)
-                                                        {
-                                                            
-
-                                                            <tr id="@order.ID" data-bs-toggle="collapse" data-target="#demo1" class="accordion-toggle orderClick">
-                                                                <td>@a</td>
-                                                                <td>@order.CreatedAt</td>
-                                                                <td>@order.Status</td>
-                                                                <td class="text-success">
-                                                                    
-                                                                    @if (order.OrderItems != null)
+                                                        <tr>
+                                                            <td id="@order.ID" colspan="6" class="orderBottomTd hiddenRow">
+                                                                <div id="@order.ID" class="orderBottomDiv accordian-body collapse">
+                                                                    @foreach(OrderItem orderItem1 in order.OrderItems)
                                                                     {
-                                                                        foreach(OrderItem orderItem in order.OrderItems)
-                                                                        {
-                                                                            b += (int)orderItem.Price * orderItem.Count;
-                                                                        }
+                                                                        <p>@orderItem1.Title x @orderItem1.Count</p>
                                                                     }
-                                                                    $@b
-                                                                </td>
-                                                                
-                                                            </tr>
-                                                            <tr>
-                                                                <td id="@order.ID" class="hiddenRow orderDesc">
-                                                                    <div class="d-none" id="">
-                                                                        @foreach(OrderItem orderItem in order.OrderItems)
-                                                                        {
-                                                                            <p><span>@orderItem.Title</span> <span>* @orderItem.Count</span></p>
-                                                                        }
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            
-                                                                a++;
-                                                            
-                                                        }
-
-                                                    </tbody>
-                                                </table>
-
-
-                                               
-                                            </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                  
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                     <!-- Single Tab Content End -->

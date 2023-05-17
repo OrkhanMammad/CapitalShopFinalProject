@@ -31,7 +31,7 @@
                     <div class="trending-products-nav">
                         @foreach(Category category in Model.Categories)
                         {
-                            <a class="trending-category-selector" data-id="@category.ID">@category.Name</a>
+                            <a style="cursor:pointer;" class="trending-category-selector" data-id="@category.ID">@category.Name</a>
                         }
                     </div>
                 </div>

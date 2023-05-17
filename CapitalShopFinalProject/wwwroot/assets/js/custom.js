@@ -207,15 +207,30 @@ for(let searchCloseIcon of searchCloseIcons){
 
 
 
-$(document).on('click', '.orderClick', (function () {
-    let id = this.getAttribute('id')
-    let orderDescs = document.getElementsByClassName('orderDesc')
-    for (let orderDesc of orderDescs)
-    {
-        if (orderDesc.getAttribute('id') == id) {
-            orderDesc.classList.toggle('hiddenRow')
+$('.accordian-body').on('show.bs.collapse', function () {
+    $(this).closest("table")
+        .find(".collapse.in")
+        .not(this)
+    
+})
+
+$(document).on('click', '.accordion-toggle', (function () {
+    let id = this.getAttribute('id');
+    console.log(id)
+    let TDs = document.getElementsByClassName('orderBottomTd')
+    let divs = document.getElementsByClassName('orderBottomDiv')
+    for (let td of TDs) {
+        if (td.getAttribute('id') == id) {
+            td.classList.toggle('hiddenRow')
         }
     }
-    
+    for (let div of divs) {
+        if (div.getAttribute('id') == id) {
+            div.classList.toggle('accordian-body')
+            div.classList.toggle('collapse')
+            
+        }
+    }
+
 
 }))
