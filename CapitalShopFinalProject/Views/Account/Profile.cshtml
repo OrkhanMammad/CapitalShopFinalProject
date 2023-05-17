@@ -3,6 +3,7 @@
 <main>
     <section>
         <div class="myaccount-header">
+           
             <h3>My Account</h3>
         </div>
     </section>
@@ -16,7 +17,7 @@
                         <div class="row">
                             <div class="col-lg-3 col-md-4">
                                 <div class="myaccount-tab-menu nav " role="tablist">
-                                    <a class="@(ViewBag.Active != true ? "active" : "")" href="#dashboad" data-bs-toggle="tab">
+                                    <a class="@(ViewBag.Active != true && ViewBag.CardError != true ? "active" : "")" href="#dashboad" data-bs-toggle="tab">
                                         <i class="fa fa-dashboard"></i>
                                         Dashboard
                                     </a>
@@ -29,7 +30,7 @@
                                         <i class="fa fa-map-marker"></i>
                                         address
                                     </a>
-                                    <a href="#payment-card-edit" data-bs-toggle="tab">
+                                    <a href="#payment-card-edit" class="@(ViewBag.CardError == true ? "active" : "")" data-bs-toggle="tab">
                                         <i class="fa fa-map-marker"></i>
                                         card
                                     </a>
@@ -45,7 +46,7 @@
                             <div class="col-lg-9 col-md-8">
                                 <div class="tab-content" id="myaccountContent">
                                     <!-- Single Tab Content Start -->
-                                    <div class="tab-pane fade @(ViewBag.Active != true ? "active show" : "") " id="dashboad" role="tabpanel">
+                                    <div class="tab-pane fade @(ViewBag.Active != true && ViewBag.CardError != true ? "active show" : "") " id="dashboad" role="tabpanel">
                                         <div class="myaccount-content">
                                             <h3>Dashboard</h3>
                                             <div class="welcome">
@@ -167,20 +168,23 @@
                                             
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="payment-card-edit" role="tabpanel">
+                                    <div class="tab-pane fade @(ViewBag.CardError == true ? "active show" : "") " id="payment-card-edit" role="tabpanel">
                                         <div class="myaccount-content">
-                                            <form>
+                                            
+                                            <form  asp-action="addPaymentCard" asp-controller="account">
                                             <div class="row mb-4">
                                                 <div class="col">
                                                     <div class="form-outline">
-                                                        <input @*asp-for="CreditCard.CardHolder"*@ type="text" id="formNameOnCard" class="form-control" />
+                                                        <input asp-for="CreditCard.CardHolder" type="text" id="formNameOnCard" class="form-control" />
                                                         <label class="form-label" for="formNameOnCard">Name on card</label>
+                                                            <span asp-validation-for="CreditCard.CardHolder"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-outline">
-                                                        <input @*asp-for="CreditCard.CardNumber"*@ type="number" id="formCardNumber" class="form-control" />
+                                                        <input asp-for="CreditCard.CardNumber" type="text" id="formCardNumber" class="form-control" />
                                                         <label class="form-label" for="formCardNumber">Credit card number</label>
+                                                            <span asp-validation-for="CreditCard.CardNumber"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -188,22 +192,28 @@
                                             <div class="row mb-4">
                                                 <div class="col-3">
                                                     <div class="form-outline">
-                                                        <input @*asp-for="CreditCard.ExpDate"*@ type="number" id="formExpiration" class="form-control" />
+                                                        <input asp-for="CreditCard.ExpDate" type="text" id="formExpiration" class="form-control" />
                                                         <label class="form-label" for="formExpiration">Expiration</label>
+                                                        <span asp-validation-for="CreditCard.ExpDate"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
                                                     <div class="form-outline">
-                                                        <input @*asp-for="CreditCard.CVV"*@ type="number" id="formCVV" class="form-control" />
+                                                        <input asp-for="CreditCard.CVV" type="text" id="formCVV" class="form-control" />
                                                         <label class="form-label" for="formCVV">CVV</label>
+                                                            <span asp-validation-for="CreditCard.CVV"></span>
                                                     </div>
                                                 </div>
                                             </div>
-                                                <a style="cursor: pointer;" class="check-btn sqr-btn add-card ">
+                                                <button type="submit" style="cursor: pointer;" class="check-btn sqr-btn add-card ">
                                                     <i class="fa fa-edit"></i> Add
-                                                    Address
-                                                </a>
+                                                    Credit Card
+                                                </button>
                                             </form>
+                                            @if (ViewBag.CardError == true)
+                                            {
+                                                <span class="text text-danger">Card Details Are Not True</span>
+                                            }
                                             
                                         </div>
                                     </div>

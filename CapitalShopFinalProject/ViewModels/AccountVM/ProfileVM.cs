@@ -39,6 +39,8 @@ namespace CapitalShopFinalProject.ViewModels.AccountVM
 
         public IEnumerable<Order>? Orders { get; set; }
 
+        public CreditCard? CreditCard { get; set; }
+
 
 
 

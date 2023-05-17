@@ -3,6 +3,7 @@ using CapitalShopFinalProject.Models;
 using CapitalShopFinalProject.ViewModels;
 using CapitalShopFinalProject.ViewModels.AccountVM;
 using CapitalShopFinalProject.ViewModels.BasketVM;
+using CapitalShopFinalProject.ViewModels.OrderVMs;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -195,10 +196,11 @@ namespace CapitalShopFinalProject.Controllers
 
         [HttpGet]
         
-        public async Task<IActionResult> Profile()
+        public async Task<IActionResult> Profile(bool a = false)
         {
             AppUser appUser = await _userManager.Users
                 .Include(u => u.Addresses.Where(a => a.IsDeleted == false))
+                .Include(u=>u.CreditCards)
                 .Include(u=>u.Orders)
                 .ThenInclude(o=>o.OrderItems)
                 .FirstOrDefaultAsync(u => u.NormalizedUserName == User.Identity.Name.ToUpperInvariant());
@@ -211,9 +213,13 @@ namespace CapitalShopFinalProject.Controllers
                 Email=appUser.Email,
                 UserName=appUser.UserName,
                 Orders=appUser.Orders,
+                CreditCard=appUser.CreditCards.FirstOrDefault(),
                 
             };
-
+            if (a == true)
+            {
+                ViewBag.CardError = true;
+            }
             return View(profileVM);
 
         }
@@ -459,9 +465,45 @@ namespace CapitalShopFinalProject.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> addPaymentCard()
+        public async Task<IActionResult> addPaymentCard(CreditCard CreditCard)
         {
-            return View();
+            AppUser appUser = await _userManager.Users
+                .Include(u => u.CreditCards).FirstOrDefaultAsync(u => u.NormalizedUserName == User.Identity.Name.ToUpperInvariant());
+            if (appUser == null)
+            {
+                return BadRequest();
+            }
+            bool a = false;
+
+            if (!ModelState.IsValid)
+            {
+                a = true;
+                return RedirectToAction("profile", "account", new { a = a });
+            }
+
+            
+
+            IEnumerable<CreditCard> CreditCards = await _context.CreditCards.ToListAsync();
+            CreditCard newCreditCard= CreditCards.FirstOrDefault(c => c.CardHolder.ToLower() ==CreditCard.CardHolder.ToLower().Trim() &&
+            c.CardNumber == CreditCard.CardNumber && c.ExpDate == CreditCard.ExpDate && c.CVV == CreditCard.CVV);
+            if(newCreditCard == null)
+            {
+                a = true;
+                return RedirectToAction("profile", "account", new { a = a });
+            }
+
+            if (newCreditCard.UserId == appUser.Id)
+            {
+                return RedirectToAction("profile", "account");
+            }
+
+            newCreditCard.UserId = appUser.Id;
+            await _context.SaveChangesAsync();
+
+
+
+
+            return RedirectToAction("profile", "account");
         }
 
 

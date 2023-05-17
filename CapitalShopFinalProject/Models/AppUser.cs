@@ -20,6 +20,8 @@ namespace CapitalShopFinalProject.Models
 
         public IEnumerable<Order>? Orders { get; set; }
 
+        public IEnumerable<CreditCard>? CreditCards { get;}
+
 
 
 

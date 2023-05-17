@@ -7,6 +7,11 @@ namespace CapitalShopFinalProject.Models
     {
         
         public int Id { get; set; }
+
+        public string? UserId { get; set; }
+
+        public AppUser? User { get; set; }
+
         [System.ComponentModel.DataAnnotations.Required]
         [StringLength(16)]
         
