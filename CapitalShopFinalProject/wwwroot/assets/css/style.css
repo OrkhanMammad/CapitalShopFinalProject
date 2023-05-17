@@ -1533,7 +1533,7 @@ login page starts here */
 }
 
 .login-input-box {
-    width: 80%;
+    width: 100%;
 }
 
 .login-input-box p {
@@ -1644,7 +1644,7 @@ register page starts here */
 }
 
 .register-input-box {
-    width: 80%;
+    width: 100%;
 }
 
 .register-input-box input {
@@ -1932,13 +1932,20 @@ color: white !important;
     font-size: 16px;
     font-weight: 500;
     margin: 6px 0;
+    cursor: pointer;
 }
 
+    .products-text-listed a:hover {
+        color: #292621 !important;
+    }
 
-.products-price-listed {
-    display: flex;
-    justify-content: center;
-}
+
+
+
+    .products-price-listed {
+        display: flex;
+        justify-content: center;
+    }
 
 .products-price-listed span {
     margin-left: 5px;
@@ -3120,14 +3127,15 @@ MYACCOUNT PAGE STARTS HERE */
     font-weight: 500 !important;
     text-transform: uppercase !important;
     letter-spacing: 1px !important;
-    color: #FFFFFF !important;
-    background-color: #0F4C75 !important;
-    padding: 5px 15px !important;
+    color: white !important;
+    background-color: red !important;
+    padding: 0px 10px !important;
     transition: 0.3s !important;
     width: 20% !important;
     text-align: center !important;
     display: block !important;
     margin: 10px auto !important;
+    border:none !important;
 }
 
             .checkout-content .checkout-cart button:hover {
@@ -3180,5 +3188,9 @@ MYACCOUNT PAGE STARTS HERE */
     padding: 0 4px !important;
     background-color: #eeeeee;
     font-size: 13px;
+}
+
+.add-address:hover{
+    color:white !important;
 }
 

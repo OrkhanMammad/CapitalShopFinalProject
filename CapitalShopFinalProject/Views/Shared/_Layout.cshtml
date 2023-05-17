@@ -31,14 +31,21 @@
         <div class="container">
             <div class="header-main">
                 <div class="header-left">
-                    <a href="">About Us</a>
+                    <a asp-action="index" asp-controller="about">About Us</a>
                     <a href="">Privacy</a>
                     <a href="">FAQ</a>
                     <a href="">Careers</a>
                 </div>
                 <div class="header-right">
                     <a asp-action="index" asp-controller="wishlist">My Wishlist</a>
-                    <a href="">Track Your Order</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="profile" asp-controller="account">Track Your Order</a>
+                    }
+                    @if (User.Identity.IsAuthenticated==false)
+                    {
+                    <a asp-action="signin" asp-controller="account">Track Your Order</a>
+                    }                    
                     <a class="social-media-tag" href=""><i class="fa-brands fa-facebook"></i></a>
                     <a class="social-media-tag" href=""><i class="fa-brands fa-instagram"></i></a>
                     <a class="social-media-tag" href=""><i class="fa-brands fa-twitter"></i></a>
@@ -67,7 +74,7 @@
                     <a asp-controller="home" asp-action="index">Home</a>
                     <a asp-controller="shop" asp-action="index">Shop</a>
                     <a href="">Blog</a>
-                    <a href="">Contact</a>
+                    <a asp-action="index" asp-controller="contact">Contact</a>
                 </div>
                 <div class="header-bottom-right">                   
                     <a class="searchIcon"><i class="fa-solid fa-magnifying-glass"></i></a>
@@ -100,7 +107,7 @@
 
     </div>
     <div class="header-bottom-text">
-        <p>Sale Up To 50% Biggest Discounts. Hurry! Limited Perriod Offer <a href="">Shop Now</a></p>
+        <p>Sale Up To 50% Biggest Discounts. Hurry! Limited Perriod Offer <a asp-action="index" asp-controller="shop">Shop Now</a></p>
 
     </div>
 
@@ -110,15 +117,32 @@
             <i class="fa-solid fa-bars"></i>
         </button>
         <div id="mobile-menu" class="mobile-menu">
-            <a class="mobile-menu-btn" href="">Home</a>
-            <a class="mobile-menu-btn" href="">Login</a>
-            <a class="mobile-menu-btn" href="">Products</a>
-            <a class="mobile-menu-btn" href="">My Card</a>
-            <a class="mobile-menu-btn" href="">Wishlist</a>
-            <a class="mobile-menu-btn" href="">Track Your Order</a>
-            <a class="mobile-menu-btn" href="">About Us</a>
-            <a class="mobile-menu-btn" href="">Contact Us</a>
-            <a class="mobile-menu-btn" href="">Log Out</a>
+            <a class="mobile-menu-btn" asp-action="index" asp-controller="home">Home</a>
+            
+            @if (User.Identity.IsAuthenticated == false)
+            {
+                <a class="mobile-menu-btn" asp-action="signin" asp-controller="account">Login</a>
+            }
+            
+            <a class="mobile-menu-btn" asp-action="index" asp-controller="shop">Products</a>
+            <a class="mobile-menu-btn" asp-action="index" asp-controller="mycard">My Card</a>
+            <a class="mobile-menu-btn" asp-action="index" asp-controller="wishlist">Wishlist</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="mobile-menu-btn" asp-action="profile" asp-controller="account">Track Your Order</a>
+            }
+            @if (User.Identity.IsAuthenticated==false)
+            {
+                <a class="mobile-menu-btn" asp-action="signin" asp-controller="account">Track Your Order</a>
+            }
+            
+            <a class="mobile-menu-btn" asp-action="index" asp-controller="about">About Us</a>
+            <a class="mobile-menu-btn" asp-action="index" asp-controller="contact">Contact Us</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="mobile-menu-btn" asp-action="logout" asp-controller="account">Log Out</a>
+            }
+            
         </div>
 
     </div>

@@ -33,6 +33,10 @@ namespace CapitalShopFinalProject.Models
 
         public IEnumerable<OrderItem>? OrderItems { get; set;}
 
+        public int? CreditCardId { get; set; }
+
+        public CreditCard? CreditCard { get; set; }
+
 
     }
 }

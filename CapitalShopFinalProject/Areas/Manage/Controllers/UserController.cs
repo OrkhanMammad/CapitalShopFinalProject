@@ -13,7 +13,7 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
     {
         private readonly AppDbContext _context;
         private readonly UserManager<AppUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<IdentityRole> _roleManager;       
         private readonly IWebHostEnvironment _env;
         public UserController(AppDbContext context, UserManager<AppUser> userManager, IWebHostEnvironment env, RoleManager<IdentityRole> roleManager)
         {
@@ -31,7 +31,8 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
         {
             IEnumerable<AppUser> Users = await _context.Users.ToListAsync();
             
-            IEnumerable<IdentityRole> roles= await _context.Roles.ToListAsync();
+            //IEnumerable<IdentityRole> roles= await _context.Roles.ToListAsync();
+    
             ViewBag.pageCount = (int)Math.Ceiling((decimal)Users.Count() / 15);
 
             Users = Users.Skip((pageIndex - 1) * 15).Take(15).ToList();

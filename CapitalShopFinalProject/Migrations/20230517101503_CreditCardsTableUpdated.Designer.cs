@@ -4,6 +4,7 @@ using CapitalShopFinalProject.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CapitalShopFinalProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230517101503_CreditCardsTableUpdated")]
+    partial class CreditCardsTableUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -279,7 +281,7 @@ namespace CapitalShopFinalProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<double?>("Balance")
+                    b.Property<double>("Balance")
                         .HasColumnType("float");
 
                     b.Property<string>("CVV")
@@ -385,9 +387,6 @@ namespace CapitalShopFinalProject.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("CreditCardId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
@@ -436,8 +435,6 @@ namespace CapitalShopFinalProject.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("CreditCardId");
 
                     b.HasIndex("UserId");
 
@@ -1017,15 +1014,9 @@ namespace CapitalShopFinalProject.Migrations
 
             modelBuilder.Entity("CapitalShopFinalProject.Models.Order", b =>
                 {
-                    b.HasOne("CapitalShopFinalProject.Models.CreditCard", "CreditCard")
-                        .WithMany("Orders")
-                        .HasForeignKey("CreditCardId");
-
                     b.HasOne("CapitalShopFinalProject.Models.AppUser", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId");
-
-                    b.Navigation("CreditCard");
 
                     b.Navigation("User");
                 });
@@ -1170,11 +1161,6 @@ namespace CapitalShopFinalProject.Migrations
             modelBuilder.Entity("CapitalShopFinalProject.Models.Category", b =>
                 {
                     b.Navigation("products");
-                });
-
-            modelBuilder.Entity("CapitalShopFinalProject.Models.CreditCard", b =>
-                {
-                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("CapitalShopFinalProject.Models.Order", b =>

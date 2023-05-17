@@ -6,10 +6,10 @@
             <div class="filter-sidebar">
                 <span>Select Gender:</span>
                 <ul>
-                    <li><a class="category-selector @(ViewBag.categoryid == 0 ? "active-for-sidebar" : " ")" data-productTypeId="@ViewBag.productTypeId" data-categoryid="0" data-priceRange="@ViewBag.priceRange">All</a></li>
+                <li><a style="cursor: pointer;" class="category-selector @(ViewBag.categoryid == 0 ? "active-for-sidebar" : " ")" data-productTypeId="@ViewBag.productTypeId" data-categoryid="0" data-priceRange="@ViewBag.priceRange">All</a></li>
                     @foreach (Category category in Model.Categories)
                     {
-                        <li><a class=" category-selector @(category.ID==ViewBag.categoryid ? "active-for-sidebar" : " ")" data-productTypeId="@ViewBag.productTypeId" data-categoryid="@category.ID" data-priceRange="@ViewBag.priceRange">@category.Name</a></li>
+                        <li><a style="cursor: pointer;" class=" category-selector @(category.ID==ViewBag.categoryid ? "active-for-sidebar" : " ")" data-productTypeId="@ViewBag.productTypeId" data-categoryid="@category.ID" data-priceRange="@ViewBag.priceRange">@category.Name</a></li>
                     }
 
 
@@ -19,10 +19,10 @@
 
                 <span>Select Product Type:</span>
                 <ul>
-                    <li><a class="product-type-selector @(ViewBag.productTypeId == 0 ? "active-for-sidebar" : " ")" data-productTypeId="0" data-categoryid="@ViewBag.categoryid" data-priceRange="@ViewBag.priceRange">All</a></li>
+                <li><a style="cursor: pointer;" class="product-type-selector @(ViewBag.productTypeId == 0 ? "active-for-sidebar" : " ")" data-productTypeId="0" data-categoryid="@ViewBag.categoryid" data-priceRange="@ViewBag.priceRange">All</a></li>
                     @foreach (ProductType productType in Model.ProductTypes)
                     {
-                        <li><a class="product-type-selector @(productType.ID==ViewBag.productTypeId ? "active-for-sidebar" : " ")" data-productTypeId="@productType.ID" data-categoryid="@ViewBag.categoryid" data-priceRange="@ViewBag.priceRange">@productType.Name</a></li>
+                    <li><a style="cursor: pointer;" class="product-type-selector @(productType.ID==ViewBag.productTypeId ? "active-for-sidebar" : " ")" data-productTypeId="@productType.ID" data-categoryid="@ViewBag.categoryid" data-priceRange="@ViewBag.priceRange">@productType.Name</a></li>
 
                     }
 
@@ -79,7 +79,7 @@
                 <div class="pagination">
                     @if (ViewBag.pageIndex > 1)
                     {
-                        <button class="pageIndexSelector" data-priceRange="@ViewBag.priceRange" data-productTypeId="@ViewBag.productTypeId" data-categoryid="@ViewBag.categoryid" data-pageIndex="@(ViewBag.pageIndex-1)">Previous</button>
+                    <button style="cursor: pointer;" class="pageIndexSelector" data-priceRange="@ViewBag.priceRange" data-productTypeId="@ViewBag.productTypeId" data-categoryid="@ViewBag.categoryid" data-pageIndex="@(ViewBag.pageIndex-1)">Previous</button>
 
                     }
 
@@ -87,13 +87,13 @@
                     {
                         if (i >= ViewBag.pageIndex - 2 && i <= ViewBag.pageIndex + 2)
                         {
-                            <button class="pageIndexSelector @(i==ViewBag.pageIndex ? "active-for-pagination" : " ")" data-priceRange="@ViewBag.priceRange" data-productTypeId="@ViewBag.productTypeId" data-categoryid="@ViewBag.categoryid" data-pageIndex="@i">@i</button>
+                        <button style="cursor: pointer;" class="pageIndexSelector @(i==ViewBag.pageIndex ? "active-for-pagination" : " ")" data-priceRange="@ViewBag.priceRange" data-productTypeId="@ViewBag.productTypeId" data-categoryid="@ViewBag.categoryid" data-pageIndex="@i">@i</button>
 
                         }
                     }
                     @if (ViewBag.pageIndex < ViewBag.pageCount)
                     {
-                        <button class="pageIndexSelector" data-priceRange="@ViewBag.priceRange" data-productTypeId="@ViewBag.productTypeId" data-categoryid="@ViewBag.categoryid" data-pageIndex="@(ViewBag.pageIndex+1)">Next</button>
+                    <button style="cursor: pointer;" class="pageIndexSelector" data-priceRange="@ViewBag.priceRange" data-productTypeId="@ViewBag.productTypeId" data-categoryid="@ViewBag.categoryid" data-pageIndex="@(ViewBag.pageIndex+1)">Next</button>
 
                     }
 

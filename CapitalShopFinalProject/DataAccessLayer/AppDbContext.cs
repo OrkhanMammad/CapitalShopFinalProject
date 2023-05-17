@@ -27,5 +27,7 @@ namespace CapitalShopFinalProject.DataAccessLayer
 
         public DbSet<OrderItem> OrderItems { get; set; }
 
+        public DbSet<CreditCard> CreditCards { get; set; }
+
     }
 }

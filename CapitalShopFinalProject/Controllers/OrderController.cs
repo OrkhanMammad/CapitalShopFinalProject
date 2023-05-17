@@ -31,28 +31,28 @@ namespace CapitalShopFinalProject.Controllers
                 return RedirectToAction("index", "shop");
             }
 
-            List<BasketVM> basketVMs= JsonConvert.DeserializeObject<List<BasketVM>>(basket);
+            List<BasketVM> basketVMs = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
 
-            AppUser appUser = await _userManager.Users.Include(u => u.Addresses.Where(a => a.IsMain && a.IsDeleted == false)).FirstOrDefaultAsync(u=>u.UserName==User.Identity.Name);
+            AppUser appUser = await _userManager.Users.Include(u => u.Addresses.Where(a => a.IsMain && a.IsDeleted == false)).FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
             if (appUser == null)
             {
                 return BadRequest();
             }
-            Address address=appUser.Addresses.FirstOrDefault();
+            Address address = appUser.Addresses.FirstOrDefault();
             // fikir ver
             if (address == null)
             {
                 return RedirectToAction("profile", "account");
             }
 
-            foreach(BasketVM basketVM in basketVMs)
+            foreach (BasketVM basketVM in basketVMs)
             {
                 Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == basketVM.Id);
                 basketVM.DiscountedPrice = product.DiscountedPrice;
-                basketVM.Title= product.Title;
-               
-                
+                basketVM.Title = product.Title;
+
+
             }
 
             Order order = new Order
@@ -71,12 +71,13 @@ namespace CapitalShopFinalProject.Controllers
 
             };
 
-            
+
 
             OrderVM orderVM = new OrderVM
-            { 
-                Order=order,
-                BasketVMs=basketVMs,
+            {
+                Order = order,
+                BasketVMs = basketVMs,
+                CreditCard=new CreditCard()
             };
 
             return View(orderVM);
@@ -85,7 +86,7 @@ namespace CapitalShopFinalProject.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Checkout( OrderVM orderVM)
+        public async Task<IActionResult> Checkout(OrderVM orderVM)
         {
             string basket = HttpContext.Request.Cookies["basket"];
             if (string.IsNullOrWhiteSpace(basket))
@@ -95,41 +96,61 @@ namespace CapitalShopFinalProject.Controllers
 
             AppUser appUser = await _userManager.Users.Include(u => u.Baskets.Where(b => b.IsDeleted == false))
                 .Include(u => u.Orders)
-                
+
                 .Include(u => u.Addresses.Where(a => a.IsMain && a.IsDeleted == false))
                 .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
             List<BasketVM> basketVMs = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
 
-
+            double? totalAmount = 0;
 
             foreach (BasketVM basketVM in basketVMs)
             {
                 Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == basketVM.Id);
                 basketVM.DiscountedPrice = product.DiscountedPrice;
                 basketVM.Title = product.Title;
-                product.Count-=basketVM.Count;
+                totalAmount += basketVM.Count * basketVM.DiscountedPrice;
             }
 
             OrderVM orderVM1 = new OrderVM
             {
-                Order =orderVM.Order ,
+                Order = orderVM.Order,
                 BasketVMs = basketVMs,
+                CreditCard=orderVM.CreditCard
+
             };
 
-            if(!ModelState.IsValid) 
-            { 
-                return View(orderVM.Order);
-            
+            if (!ModelState.IsValid)
+            {
+                return View(orderVM1);
+
             }
 
-            List<OrderItem> orderItems= new List<OrderItem>();
+            IEnumerable<CreditCard> creditCards = await _context.CreditCards.ToListAsync();
+            CreditCard creditCard = creditCards.FirstOrDefault(c => c.CardHolder.ToLower() == orderVM.CreditCard.CardHolder.ToLower().Trim() &&
+            c.CardNumber == orderVM.CreditCard.CardNumber && c.ExpDate == orderVM.CreditCard.ExpDate && c.CVV == orderVM.CreditCard.CVV);
+            if(creditCard == null) 
+            {
+                ModelState.AddModelError("", "Payment card details are not correct");
+                return View(orderVM1);
+            }
+            if (creditCard.Balance < totalAmount)
+            {
+                ModelState.AddModelError("", "Card balance is not enough for purchasing");
+                return View(orderVM1);
+            }
+            
+            
+            
+            
 
-            foreach(BasketVM basketVm in basketVMs)
+            List<OrderItem> orderItems = new List<OrderItem>();
+
+            foreach (BasketVM basketVm in basketVMs)
             {
                 OrderItem orderItem = new OrderItem
                 {
-                    Title=basketVm.Title,
+                    Title = basketVm.Title,
                     ProductId = basketVm.Id,
                     Count = basketVm.Count,
                     Price = basketVm.DiscountedPrice,
@@ -141,7 +162,14 @@ namespace CapitalShopFinalProject.Controllers
 
             }
 
-            foreach(Basket basket1 in appUser.Baskets)
+
+            foreach (BasketVM basketVM in basketVMs)
+            {
+                Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == basketVM.Id);
+                product.Count-=basketVM.Count;
+            }
+
+            foreach (Basket basket1 in appUser.Baskets)
             {
 
                 basket1.IsDeleted = true;
@@ -150,13 +178,15 @@ namespace CapitalShopFinalProject.Controllers
 
             HttpContext.Response.Cookies.Append("basket", "");
             orderVM.Order.IsDeleted = false;
-            orderVM.Order.UserId= appUser.Id;
+            orderVM.Order.UserId = appUser.Id;
             orderVM.Order.CreatedAt = DateTime.UtcNow.AddHours(4);
             orderVM.Order.CreatedBy = $"{appUser.Name} {appUser.SurName}";
-            orderVM.Order.OrderItems= orderItems;
+            orderVM.Order.OrderItems = orderItems;
             orderVM.Order.No = appUser.Orders != null && appUser.Orders.Count() > 0 ? appUser.Orders.Last().No + 1 : 1;
             orderVM.Order.Status = Enums.OrderType.Pending;
-            
+            orderVM.Order.CreditCardId = creditCard.Id;
+            creditCard.Balance -= totalAmount;
+
 
             await _context.Orders.AddAsync(orderVM.Order);
             await _context.SaveChangesAsync();

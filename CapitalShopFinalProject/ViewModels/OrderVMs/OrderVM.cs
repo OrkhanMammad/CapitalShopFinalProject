@@ -10,5 +10,7 @@ namespace CapitalShopFinalProject.ViewModels.OrderVMs
 
         public Order Order { get; set; }
 
+        public CreditCard CreditCard { get; set; }
+
     }
 }

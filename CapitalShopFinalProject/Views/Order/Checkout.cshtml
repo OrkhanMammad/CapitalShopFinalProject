@@ -3,92 +3,162 @@
     int a = 0;
 }
 <main>
-    <section id="checkout-all">
-        <div class="checkout-content container">
-            <div class="checkout ">
-                <form method="post">
-                    <div asp-validation-summary="ModelOnly"></div>
+    <section>
+        <div class="container">
+            <div class="row p-2">
+                <div class="col-md-8 mb-4">
+                    <div class="card mb-4">
+                        <div class="card-header py-3">
+                            <h5 class="mb-0">Biling details</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post">
+                                <div class="text text-danger" asp-validation-summary="ModelOnly"></div>
+                                <!-- 2 column grid layout with text inputs for the first and last names -->
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <div class="form-outline">
+                                            <input asp-for="Order.Name" type="text" id="form6Example1" class="form-control" />
+                                            <label class="form-label" for="form6Example1">First name</label>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-outline">
+                                            <input asp-for="Order.Surname" type="text" id="form6Example2" class="form-control" />
+                                            <label class="form-label" for="form6Example2">Last name</label>
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <h2 class="py-2">Billing Address</h2>
-                    <!--  Name inputs -->
-                    <div class="form-outline mb-4 w-45">
-                        <input asp-for="Order.Name" type="text" id="form2Example1" class="form-control" />
-                        <label class="form-label" for="form2Example1">First Name</label>
-                    </div>
-                    <div class="form-outline mb-4 w-45 m-60">
-                        <input asp-for="Order.Surname" type="text" id="form2Example2" class="form-control" />
-                        <label class="form-label" for="form2Example2">Last Name</label>
-                    </div>
-                    <!-- Email input -->
-                    <div class="form-outline mb-4 ">
-                        <input asp-for="Order.Email" type="email" id="form2Example3" class="form-control" />
-                        <label class="form-label" for="form2Example3">Email address</label>
-                    </div>
-                    <!-- UserName Input -->
-                    <div class="form-outline mb-4">
-                        <input asp-for="Order.AddressLine" type="text" id="form2Example8" class="form-control" />
-                        <label class="form-label" for="form2Example8">Address1</label>
-                    </div>
-                    
-                    <div class="form-outline mb-4 ">
-                        <select asp-for="Order.Country" class="form-select" id="form2Example12" name="form2Example12" aria-label="Default select example">
-                            <option selected>Azerbaijan</option>
-                            <option value="1">Turkey</option>
-                            
+                                <!-- Text input -->
+                                <div class="form-outline mb-4">
+                                    <input asp-for="Order.Email" type="email" id="form6Example3" class="form-control" />
+                                    <label class="form-label" for="form6Example3">E-Mail</label>
+                                </div>
 
-                        </select>
+                                <!-- Text input -->
+                                <div class="form-outline mb-4">
+                                    <input asp-for="Order.AddressLine" type="text" id="form6Example4" class="form-control" />
+                                    <label class="form-label" for="form6Example4">Address</label>
+                                </div>
+
+                                <div class="form-outline mb-4 ">
+                                    <select asp-for="Order.Country" class="form-select" id="form2Example12" name="form2Example12" aria-label="Default select example">
+                                        <option selected>Azerbaijan</option>
+                                        <option value="1">Turkey</option>
+                                        <option value="2">America</option>
+                                        <option value="3">Russia</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input asp-for="Order.State" type="text" id="form6Example6" class="form-control" />
+                                    <label class="form-label" for="form6Example6">State</label>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input asp-for="Order.City" type="text" id="form2Example10" class="form-control" />
+                                    <label class="form-label" for="form2Example10">Town/City</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input asp-for="Order.PostalCode" type="text" id="form2Example10" class="form-control" />
+                                    <label class="form-label" for="form2Example10">Postal Code</label>
+                                </div>
+
+                                
+
+                                <!-- Number input -->
+                                
+
+                                <hr class="my-4" />
+                                <h5 class="mb-4">Payment</h5>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="checkoutForm3"
+                                           checked />
+                                    <label class="form-check-label" for="checkoutForm3">
+                                        Credit card
+                                    </label>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <div class="form-outline">
+                                            <input asp-for="CreditCard.CardHolder" type="text" id="formNameOnCard" class="form-control" />
+                                            <label class="form-label" for="formNameOnCard">Name on card</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-outline">
+                                            <input asp-for="CreditCard.CardNumber" type="number" id="formCardNumber" class="form-control" />
+                                            <label class="form-label" for="formCardNumber">Credit card number</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-3">
+                                        <div class="form-outline">
+                                            <input asp-for="CreditCard.ExpDate" type="number" id="formExpiration" class="form-control" />
+                                            <label class="form-label" for="formExpiration">Expiration</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-outline">
+                                            <input asp-for="CreditCard.CVV" type="number" id="formCVV" class="form-control" />
+                                            <label class="form-label" for="formCVV">CVV</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-primary btn-lg btn-block" type="submit">
+                                    Continue to checkout
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="form-outline mb-4">
-                        <input asp-for="Order.City" type="text" id="form2Example10" class="form-control" />
-                        <label class="form-label" for="form2Example10">Town/City</label>
-                    </div>
-                    <div class="form-outline mb-4 w-45">
-                        <input asp-for="Order.State" type="text" id="form2Example11" class="form-control" />
-                        <label class="form-label" for="form2Example11">State</label>
-                    </div>
-                    <div class="form-outline mb-4 w-45 m-60">
-                        <input asp-for="Order.PostalCode" type="text" id="form2Example12" class="form-control" />
-                        <label class="form-label" for="form2Example12">Zip Code</label>
-                    </div>
-                    <button class="placeOrder" type="submit">Place Order</button>
-                    <hr>
-                </form>
-            </div>
-            <div class="checkout-cart">
-                <h2 class="py-2">Cart Total</h2>
-                <div class="checkout-cart-pricebox">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col"><h5 class="fw-bold">Products</h5></th>
-                                <th scope="col"><h5 class="fw-bold">Total</h5></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="checkout-cart">                        
+                        <div class="checkout-cart-pricebox">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"><h5 class="fw-bold">Products</h5></th>
+                                        <th scope="col"><h5 class="fw-bold">Total</h5></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(BasketVM basketVM in Model.BasketVMs)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @basketVM.Title    x @basketVM.Count
+                                            </td>
+                                            <td>@(basketVM.Count * basketVM.DiscountedPrice)$</td>
+                                        </tr>
+                                        a += basketVM.Count * (int)basketVM.DiscountedPrice;
+                                    }                                    
+                                    <tr>
+                                        <td>
+                                            <h5 class="fw-bold ">Subtotal</h5>
+                                        </td>
+                                        <td>@a$</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h5 class="fw-bold ">Total</h5>
+                                        </td>
+                                        <td>@a$</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                             
-                            @foreach(BasketVM basketVM in Model.BasketVMs)
-                            {
-                                a += (int)(basketVM.Count * basketVM.DiscountedPrice);
-                                <tr>
-                                    <td>
-                                        <span>@basketVM.Title</span>    <span>x @basketVM.Count</span>
-                                    </td>
-                                    <td>@basketVM.DiscountedPrice$</td>
-                                </tr>
-                            }
-                            
-                            <tr>
-                                <td>
-                                    <h5 class="fw-bold ">Total</h5>
-                                </td>
-                                <td>@a$</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
 
     </section>

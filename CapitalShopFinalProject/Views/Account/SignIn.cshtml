@@ -1,7 +1,7 @@
 ﻿@model SignInVM
 
 <main>
-    <div class="login-all">
+    <div style="padding:50px 0;" class="login-all">
         <div class="login-main">
             <div class="login-header">
                 <h5>Login</h5>
@@ -17,10 +17,10 @@
                     <p>Password</p>
                     <input asp-for="Password" type="password" placeholder="Password">
                     <span asp-validation-for="Password" class="text text-danger"></span>
-                    <a class="forgotpassword" href="">Forgot Password?</a>
+                    <a class="forgotpassword" asp-action="forgetpassword" asp-controller="account">Forgot Password?</a>
                 </div>
                 <div class="login-bottom">
-                    <p>Don’t have an account? <a href="">Sign Up</a> here</p>
+                    <p>Don’t have an account? <a asp-action="register" asp-controller="account">Sign Up</a> here</p>
                     <button type="submit">Login</button>
                 </div>
 

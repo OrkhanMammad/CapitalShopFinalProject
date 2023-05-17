@@ -1,6 +1,8 @@
 using CapitalShopFinalProject.DataAccessLayer;
 using CapitalShopFinalProject.Models;
+using CapitalShopFinalProject.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 
@@ -33,6 +35,8 @@ builder.Services.AddSession(options =>
 {
     options.IdleTimeout= TimeSpan.FromMinutes(10);
 });
+
+builder.Services.Configure<SmtpSetting>(builder.Configuration.GetSection("SmtpSetting"));
 var app = builder.Build();
 app.UseSession();
 app.UseAuthentication();

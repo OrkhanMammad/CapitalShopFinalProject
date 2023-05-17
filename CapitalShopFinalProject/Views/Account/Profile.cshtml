@@ -29,6 +29,10 @@
                                         <i class="fa fa-map-marker"></i>
                                         address
                                     </a>
+                                    <a href="#payment-card-edit" data-bs-toggle="tab">
+                                        <i class="fa fa-map-marker"></i>
+                                        card
+                                    </a>
                                     <a href="#account-info" class="@(ViewBag.Active == true ? "active" : "")" data-bs-toggle="tab">
                                         <i class="fa fa-user"></i> Account
                                         Details
@@ -151,7 +155,7 @@
 
 
                                             </div>
-                                            <a  class="check-btn sqr-btn add-address ">
+                                            <a style="cursor: pointer;" class="check-btn sqr-btn add-address ">
                                                 <i class="fa fa-edit"></i> Add
                                                 Address
                                             </a>
@@ -160,6 +164,46 @@
 
                                             </div>
                                           
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="payment-card-edit" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <form>
+                                            <div class="row mb-4">
+                                                <div class="col">
+                                                    <div class="form-outline">
+                                                        <input @*asp-for="CreditCard.CardHolder"*@ type="text" id="formNameOnCard" class="form-control" />
+                                                        <label class="form-label" for="formNameOnCard">Name on card</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-outline">
+                                                        <input @*asp-for="CreditCard.CardNumber"*@ type="number" id="formCardNumber" class="form-control" />
+                                                        <label class="form-label" for="formCardNumber">Credit card number</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-4">
+                                                <div class="col-3">
+                                                    <div class="form-outline">
+                                                        <input @*asp-for="CreditCard.ExpDate"*@ type="number" id="formExpiration" class="form-control" />
+                                                        <label class="form-label" for="formExpiration">Expiration</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="form-outline">
+                                                        <input @*asp-for="CreditCard.CVV"*@ type="number" id="formCVV" class="form-control" />
+                                                        <label class="form-label" for="formCVV">CVV</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                <a style="cursor: pointer;" class="check-btn sqr-btn add-card ">
+                                                    <i class="fa fa-edit"></i> Add
+                                                    Address
+                                                </a>
+                                            </form>
                                             
                                         </div>
                                     </div>

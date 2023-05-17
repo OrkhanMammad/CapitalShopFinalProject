@@ -36,12 +36,19 @@
                 <div class="basket-overall-box">
             <h5>Products in Basket</h5>
                     <p>Products Amount: <span>$@ViewBag.ProductsTotal</span></p>
-                    <p>Tax: <span>$50.00</span></p>
+                    <p>Tax: <span>$0.00</span></p>
                     <hr>
 
-                    <h6>Total Amount: <span>$@(ViewBag.ProductsTotal + 50)</span></h6>
+                    <h6>Total Amount: <span>$@(ViewBag.ProductsTotal)</span></h6>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="checkout" asp-controller="order">Checkout</a>
+                    }
+                    @if (User.Identity.IsAuthenticated == false)
+                    {
+                        <a asp-action="signin" asp-controller="account">Checkout</a>
+                    }
 
-                    <a asp-action="checkout" asp-controller="order">Checkout</a>
 
 
                 </div>

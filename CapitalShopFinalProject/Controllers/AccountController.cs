@@ -1,12 +1,16 @@
 ﻿using CapitalShopFinalProject.DataAccessLayer;
 using CapitalShopFinalProject.Models;
+using CapitalShopFinalProject.ViewModels;
 using CapitalShopFinalProject.ViewModels.AccountVM;
 using CapitalShopFinalProject.ViewModels.BasketVM;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using MimeKit;
 using Newtonsoft.Json;
 
 namespace CapitalShopFinalProject.Controllers
@@ -20,13 +24,15 @@ namespace CapitalShopFinalProject.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly SmtpSetting _smtpSetting;
 
-        public AccountController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<AppUser> signInManager, AppDbContext context)
+        public AccountController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<AppUser> signInManager, AppDbContext context, IOptions<SmtpSetting> smtpSetting)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
             _context = context;
+            _smtpSetting = smtpSetting.Value;
         }
 
 
@@ -74,9 +80,61 @@ namespace CapitalShopFinalProject.Controllers
 
             await _userManager.AddToRoleAsync(appUser, "Member");
 
-           
-                return RedirectToAction(nameof(SignIn));
+            string token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
+
+            string url = Url.Action("EmailConfirm", "Account", new { id = appUser.Id, token = token },
+                HttpContext.Request.Scheme, HttpContext.Request.Host.ToString());
+
+            string fullpath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "Shared", "EmailConfirmPartial.cshtml");
+            string templateContent = await System.IO.File.ReadAllTextAsync(fullpath);
+            templateContent = templateContent.Replace("{{url}}", url);
+
+            MimeMessage mimeMessage = new();
+            mimeMessage.From.Add(MailboxAddress.Parse(_smtpSetting.Email));
+            mimeMessage.To.Add(MailboxAddress.Parse(appUser.Email));
+            mimeMessage.Subject = "Email Confirmation";
+            mimeMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            {
+                Text = templateContent
+            };
+            using (SmtpClient smtpClient = new())
+            {
+                await smtpClient.ConnectAsync(_smtpSetting.Host, _smtpSetting.Port, MailKit.Security.SecureSocketOptions.StartTls);
+                await smtpClient.AuthenticateAsync(_smtpSetting.Email, _smtpSetting.Password);
+                await smtpClient.SendAsync(mimeMessage);
+                await smtpClient.DisconnectAsync(true);
+                smtpClient.Dispose();
+            }
+
+
+            return RedirectToAction(nameof(SignIn));
             
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> EmailConfirm(string id, string token)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return BadRequest();
+            }
+            AppUser appUser = await _userManager.FindByIdAsync(id);
+
+            if (appUser == null) { return NotFound(); }
+
+            IdentityResult identityResult = await _userManager.ConfirmEmailAsync(appUser, token);
+
+            if (!identityResult.Succeeded)
+            {
+
+                return BadRequest();
+
+            }
+            
+            await _signInManager.SignInAsync(appUser, false);
+            return RedirectToAction("index", "mycard");
+
         }
 
         [HttpGet]
@@ -306,6 +364,110 @@ namespace CapitalShopFinalProject.Controllers
 
 
         }
+
+        [HttpGet]
+        public  IActionResult ForgetPassword() 
+        {
+            return View();
+        
+        }
+
+        
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordVM forgetPasswordVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(forgetPasswordVM);
+            }
+
+            AppUser appUser = await _userManager.Users.FirstOrDefaultAsync(u => u.NormalizedEmail == forgetPasswordVM.Email.Trim().ToUpperInvariant());
+
+            if (appUser == null)
+            {
+                return RedirectToAction("ForgetPassword", "account");
+            }
+
+            string token = await _userManager.GeneratePasswordResetTokenAsync(appUser);
+
+            string url = Url.Action("ResetPassword", "Account", new { token, email = forgetPasswordVM.Email },
+                HttpContext.Request.Scheme, HttpContext.Request.Host.ToString());
+
+            string fullpath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "Shared", "PasswordReset.cshtml");
+            string templateContent = await System.IO.File.ReadAllTextAsync(fullpath);
+            templateContent = templateContent.Replace("{{url}}", url);
+
+            MimeMessage mimeMessage = new();
+            mimeMessage.From.Add(MailboxAddress.Parse(_smtpSetting.Email));
+            mimeMessage.To.Add(MailboxAddress.Parse(appUser.Email));
+            mimeMessage.Subject = "Reset Password";
+            mimeMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            {
+                Text = templateContent
+            };
+            using (SmtpClient smtpClient = new())
+            {
+                smtpClient.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                await smtpClient.ConnectAsync(_smtpSetting.Host, _smtpSetting.Port, MailKit.Security.SecureSocketOptions.Auto);
+                await smtpClient.AuthenticateAsync(_smtpSetting.Email, _smtpSetting.Password);
+                await smtpClient.SendAsync(mimeMessage);
+                await smtpClient.DisconnectAsync(true);
+                smtpClient.Dispose();
+            }
+
+            
+            return RedirectToAction("index", "Home");
+
+        }
+
+
+        public IActionResult ResetPassword(string token, string email)
+        {
+            var model = new ResetPasswordVM { Token = token, Email = email };
+            return View(model);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordVM resetPasswordVM)
+        {
+            if (!ModelState.IsValid)
+                return View(resetPasswordVM);
+
+            AppUser appUser = await _userManager.FindByEmailAsync(resetPasswordVM.Email);
+            if (appUser == null)
+                return NotFound();
+
+            var resetPassResult = await _userManager.ResetPasswordAsync(appUser, resetPasswordVM.Token, resetPasswordVM.Password);
+            if (!resetPassResult.Succeeded)
+            {
+                foreach (var error in resetPassResult.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+
+                return View();
+            }
+
+
+           
+            return RedirectToAction("signin", "account");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> addPaymentCard()
+        {
+            return View();
+        }
+
+
+
+
+
 
 
 
