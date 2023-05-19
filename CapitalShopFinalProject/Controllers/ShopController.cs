@@ -26,13 +26,17 @@ namespace CapitalShopFinalProject.Controllers
 
        
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? categoryid)
         {
             IEnumerable<Product> Products = await _context.Products.Where(p => p.IsDeleted == false && p.Count>0).ToListAsync();
             IEnumerable<Category> Categories = await _context.Categories.Where(c => c.IsDeleted == false).ToListAsync();
             IEnumerable<ProductType> ProductTypes = await _context.ProductTypes.Where(pt => pt.IsDeleted == false).ToListAsync();
+            if (categoryid != null)
+            {
+                Products = Products.Where(p => p.CategoryId == categoryid);
+            }
 
-            ViewBag.categoryid = 0;
+            ViewBag.categoryid = categoryid;
             ViewBag.productTypeId = 0;
             ViewBag.pageIndex = 1;
             ViewBag.pageCount = (int)Math.Ceiling((decimal)Products.Count() / 9);

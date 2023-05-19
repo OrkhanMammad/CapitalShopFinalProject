@@ -1,4 +1,18 @@
-﻿<!DOCTYPE html>
+﻿@*@inject ILayoutService layoutservice
+@inject UserManager<AppUser> userManager
+@{
+    AppUser appUser = null;
+    if (User.Identity.IsAuthenticated)
+    {
+        appUser = await userManager.FindByNameAsync(User.Identity.Name);
+    }
+}
+@{
+    IEnumerable<BasketVM> basketVMs = await layoutservice.GetBasket();
+}*@
+
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -229,14 +243,11 @@
     </div>
     <div class="search-products">
         <p>What Are You Looking?</p>
-        <input type="text" placeholder="Enter Product Name">
+        <input class="searchProduct" type="text" placeholder="Enter Product Name">
     </div>
     <div class="products-searched">
 
-        <div class="product-searched-box"><img src="~/assets/Images/products/img-11.jpg" alt=""><span> <a href="">Lorem ipsum dolor sit amet.</a>
-       </span></div>
-        <div class="product-searched-box"><img src="~/assets/Images/products/img-11.jpg" alt=""><span> <a href="">Lorem ipsum dolor sit amet.</a> </span></div>
-
+            @await Html.PartialAsync("_SearchPartial", new List<Product>())
     </div>
 </div>
 

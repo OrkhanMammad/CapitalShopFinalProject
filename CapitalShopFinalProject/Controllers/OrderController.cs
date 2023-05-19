@@ -33,7 +33,7 @@ namespace CapitalShopFinalProject.Controllers
 
             List<BasketVM> basketVMs = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
 
-            AppUser appUser = await _userManager.Users.Include(u => u.Addresses.Where(a => a.IsMain && a.IsDeleted == false)).FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+            AppUser appUser = await _userManager.Users.Include(u => u.Addresses.Where(a => a.IsMain && a.IsDeleted == false)).Include(u=>u.CreditCards).FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
             if (appUser == null)
             {
@@ -70,14 +70,18 @@ namespace CapitalShopFinalProject.Controllers
 
 
             };
-
+            CreditCard creditCard = new CreditCard();
+            if (appUser.CreditCards.Count() > 0)
+            {
+                creditCard = appUser.CreditCards.First();
+            }
 
 
             OrderVM orderVM = new OrderVM
             {
                 Order = order,
                 BasketVMs = basketVMs,
-                CreditCard=new CreditCard()
+                CreditCard=creditCard
             };
 
             return View(orderVM);

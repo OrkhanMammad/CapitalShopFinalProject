@@ -1,0 +1,9 @@
+﻿@model List<Product>
+
+@foreach(Product product in Model)
+{
+    <div class="product-searched-box"><img src="~/assets/Images/products/@product.MainImage" alt=""><span> <a asp-controller="shop" asp-action="detail" asp-route-productId="@product.ID">@product.Title</a></span></div>
+}
+
+
+       

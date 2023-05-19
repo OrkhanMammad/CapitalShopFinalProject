@@ -22,6 +22,8 @@ namespace CapitalShopFinalProject.Models
 
         public IEnumerable<CreditCard>? CreditCards { get;}
 
+        public string? BlockedBy { get; set; }
+
 
 
 

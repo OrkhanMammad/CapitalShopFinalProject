@@ -40,7 +40,7 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
 
 
 
-            return View();
+            return View(Orders);
         }
     }
 }

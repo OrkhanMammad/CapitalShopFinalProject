@@ -12,8 +12,8 @@
                     <div class="category-banner-box">
                         <img src="assets/Images/home/category-banner/@category.Image" alt="">
                         <div class="banner-layer"></div>
-                        <a class="banner-box-title" asp-controller="shop" asp-action="index">@category.Name's Fashion</a>
-                        <a class="banner-box-shop" asp-controller="shop" asp-action="index">Shop Now</a>
+                        <a class="banner-box-title" asp-controller="shop" asp-action="index" asp-route-categoryid="@category.ID">@category.Name's Fashion</a>
+                        <a class="banner-box-shop" asp-controller="shop" asp-action="index" asp-route-categoryid="@category.ID">Shop Now</a>
                     </div>
                 }
             </div>

@@ -1,0 +1,26 @@
+﻿@model AppUser
+
+<div style="padding:60px;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">User's Name</th>
+                <th scope="col">User's Surname</th>
+                <th scope="col">Change User's Role</th>               
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Name</td>
+                <td>@Model.SurName</td>
+                <td>
+                    <a asp-area="manage" asp-controller="user" asp-action="changerole" asp-route-userid="@Model.Id" asp-route-roleid="1" class="btn @(ViewBag.admin == true ? "btn-success" : " ") ">Admin</a>
+                    <a asp-area="manage" asp-controller="user" asp-action="changerole" asp-route-userid="@Model.Id" asp-route-roleid="2" class="btn @(ViewBag.admin == false ? "btn-success" : " ") ">Member</a>
+                </td>
+                
+            </tr>
+        </tbody>
+    </table>
+
+
+</div>

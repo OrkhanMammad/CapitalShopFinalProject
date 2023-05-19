@@ -106,7 +106,7 @@ namespace CapitalShopFinalProject.Controllers
                 await smtpClient.DisconnectAsync(true);
                 smtpClient.Dispose();
             }
-
+           
 
             return RedirectToAction(nameof(SignIn));
             

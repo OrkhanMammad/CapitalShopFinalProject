@@ -2826,6 +2826,7 @@ align-items: center;
     width: 51%;
     border: 1px solid grey;
     margin-top: 10px;
+    border-radius: 10px;
 }
 
 .product-searched-box img{
@@ -3084,7 +3085,7 @@ MYACCOUNT PAGE STARTS HERE */
 .rate {
     float: left;
     height: 46px;
-    padding: 0 10px;
+    
 }
 
     .rate:not(:checked) > input {

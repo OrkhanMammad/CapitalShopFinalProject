@@ -50,5 +50,15 @@ namespace CapitalShopFinalProject.Controllers
 
         }
 
+        public async Task<IActionResult> SearchProducts(string? searchKey)
+        {
+            IEnumerable<Product> products = await _context.Products.Where(p => p.IsDeleted == false && p.Title.Contains(searchKey)).ToListAsync();
+
+            return PartialView("_SearchPartial", products);
+
+
+
+        }
+
     }
 }

@@ -234,3 +234,25 @@ $(document).on('click', '.accordion-toggle', (function () {
 
 
 }))
+
+
+$(document).on('keyup', '.searchProduct', (function () {
+    let value = $(this).val();
+    if (value.toString().length > 2) {
+        fetch("/home/SearchProducts?searchKey=" + value)
+            .then(res => {
+                return res.text();
+            })
+            .then(data => {
+                $('.products-searched').html(data);
+            })
+
+    }
+    else {
+        $('.products-searched').html('');
+
+    }
+    console.log(value)
+
+
+}))
