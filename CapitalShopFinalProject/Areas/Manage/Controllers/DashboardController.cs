@@ -26,17 +26,20 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
 
         [HttpGet]
         
-        public async Task<IActionResult>  Index()
+        public async Task<IActionResult>  Index(int pageindex=1)
         {
+            ViewBag.pageindex=pageindex;
             AppUser appUser = await _userManager.Users.FirstOrDefaultAsync(u => u.NormalizedUserName == User.Identity.Name.ToUpperInvariant());
             if (appUser == null)
             {
                 return BadRequest();
             }
 
-            IEnumerable<Order> Orders = await _context.Orders.Include(o=>o.OrderItems).OrderByDescending(o=>o.CreatedAt).ToListAsync();
+            IEnumerable<Order> Orders = await _context.Orders.Include(o => o.OrderItems).OrderByDescending(o => o.CreatedAt).ToListAsync();
 
- 
+            ViewBag.pagecount = (int)Math.Ceiling((decimal)Orders.Count() / 10);
+
+            Orders = Orders.Skip((pageindex - 1) * 10).Take(10).ToList();
 
 
 

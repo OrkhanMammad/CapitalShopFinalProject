@@ -35,9 +35,20 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
         public async Task<IActionResult> UpdateStatus(Order order)
         {
 
-            Order Order = await _context.Orders.FirstOrDefaultAsync(o => o.ID == order.ID);
+            Order Order = await _context.Orders.Include(o=>o.OrderItems).FirstOrDefaultAsync(o => o.ID == order.ID);
             if (Order == null) { return NotFound(); }
             Order.Status = order.Status;
+            if (order.Status == Enums.OrderType.Rejected)
+            {
+                double? refund = 0;
+                CreditCard creditCard = await _context.CreditCards.Where(cd=>cd.Id==Order.CreditCardId).FirstOrDefaultAsync();
+                foreach(OrderItem orderItem in Order.OrderItems)
+                {
+                    refund += orderItem.Count * orderItem.Price;
+                }
+                creditCard.Balance += refund;
+
+            }
             Order.Comment= order.Comment;
             await _context.SaveChangesAsync();
             return RedirectToAction("index", "dashboard", new { area = "manage" });

@@ -85,6 +85,28 @@
                 </tbody>
             </table>
         </div>
+        <div class="pagination1">
+            @if (ViewBag.pageIndex > 1)
+            {
+                <a class="pageIndexSelector1" asp-action="index" asp-controller="dashboard" asp-area="manage" asp-route-pageIndex="@(ViewBag.pageindex-1)">Previous</a>
+
+            }
+
+            @for (var i = 1; i <= ViewBag.pagecount; i++)
+            {
+                if (i >= ViewBag.pageindex - 2 && i <= ViewBag.pageindex + 2)
+                {
+                    <a class="pageIndexSelector1 @(i==ViewBag.pageindex ? "active-for-pagination" : " ")" asp-action="index" asp-controller="product" asp-area="manage" asp-route-pageIndex="@i">@i</a>
+
+                }
+            }
+            @if (ViewBag.pageindex < ViewBag.pagecount)
+            {
+                <a class="pageIndexSelector1" asp-action="index" asp-controller="product" asp-area="manage" asp-route-pageIndex="@(ViewBag.pageindex+1)">Next</a>
+
+            }
+
+        </div>
     </div>
 </div>
 <!-- Recent Sales End -->
