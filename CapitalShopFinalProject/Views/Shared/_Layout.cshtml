@@ -1,15 +1,7 @@
-﻿@*@inject ILayoutService layoutservice
-@inject UserManager<AppUser> userManager
-@{
-    AppUser appUser = null;
-    if (User.Identity.IsAuthenticated)
-    {
-        appUser = await userManager.FindByNameAsync(User.Identity.Name);
-    }
-}
+﻿@inject ILayoutService layoutservice
 @{
     IEnumerable<BasketVM> basketVMs = await layoutservice.GetBasket();
-}*@
+}
 
 
 <!DOCTYPE html>
@@ -102,7 +94,7 @@
                     }
 
                     <a asp-controller="mycard" asp-action="index" class="header-basket-btn">
-                        <i class="fa-solid fa-cart-shopping"></i><span class="basket-count">0</span>
+                        <i class="fa-solid fa-cart-shopping"></i><span class="basket-count">@basketVMs.Count()</span>
                     </a>
                 </div>
 

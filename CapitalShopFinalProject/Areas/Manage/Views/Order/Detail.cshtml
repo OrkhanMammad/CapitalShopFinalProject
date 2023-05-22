@@ -44,7 +44,7 @@
 
 <div class="row">
     <div class="col">
-        <form method="post" asp-area="manage" asp-controller="order" asp-action="changeStatus">
+        <form method="post" asp-area="manage" asp-controller="order" asp-action="UpdateStatus">
             <input type="hidden" name="Id" value="@Model.ID" />
             <div class="form-group">
                 <label asp-for="Status"></label>

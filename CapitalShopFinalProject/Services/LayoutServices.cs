@@ -1,4 +1,5 @@
 ﻿using CapitalShopFinalProject.DataAccessLayer;
+using CapitalShopFinalProject.Interfaces;
 using CapitalShopFinalProject.Models;
 using CapitalShopFinalProject.ViewModels.BasketVM;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace CapitalShopFinalProject.Services
 {
-    public class LayoutServices
+    public class LayoutServices : ILayoutService
     {
         private readonly AppDbContext _appDbContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -17,11 +18,16 @@ namespace CapitalShopFinalProject.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<IEnumerable<BasketVM>> GetBaskets()
+        public Task<IEnumerable<BasketVM>> GetBaskets()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<BasketVM>> GetBasket()
         {
             string basket = _httpContextAccessor.HttpContext.Request.Cookies["basket"];
 
-            List<BasketVM> basketVMs = null;
+            List<BasketVM> basketVMs = new List<BasketVM>();
 
 
             if (!string.IsNullOrEmpty(basket))

@@ -173,7 +173,22 @@ namespace CapitalShopFinalProject.Controllers
             
         }
 
+        public async Task<IActionResult> GetBasketCount()
+        {
+            string Basket = HttpContext.Request.Cookies["basket"];
+            List<BasketVM> BasketList = new List<BasketVM>();
+            if (!string.IsNullOrEmpty(Basket))
+            {
+                BasketList = JsonConvert.DeserializeObject<List<BasketVM>>(Basket);
+            }
 
+           ViewBag.basketCount = 1;
+
+            return PartialView("_BasketCountPartial");
+
+            
+
+        }
 
         
 

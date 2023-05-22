@@ -36,5 +36,11 @@ namespace CapitalShopFinalProject.Models
         public bool? IsTrending { get; set; }
 
         public IEnumerable<Review>? Reviews { get; set; }
+
+        [NotMapped]
+        public List<IFormFile>? ProductFiles { get; set; }
+
+        [NotMapped]
+        public IFormFile? MainFile { get; set; }
     }
 }

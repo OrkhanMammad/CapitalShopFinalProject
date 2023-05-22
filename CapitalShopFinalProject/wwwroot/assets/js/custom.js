@@ -1,3 +1,4 @@
+
 $(document).on('click', '.delete-card', (function () {
     let productId = this.getAttribute('data-id')
     fetch("/mycard/CardDelete?cardItemId=" + productId)

@@ -28,5 +28,21 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
 
             return View(order);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> UpdateStatus(Order order)
+        {
+
+            Order Order = await _context.Orders.FirstOrDefaultAsync(o => o.ID == order.ID);
+            if (Order == null) { return NotFound(); }
+            Order.Status = order.Status;
+            Order.Comment= order.Comment;
+            await _context.SaveChangesAsync();
+            return RedirectToAction("index", "dashboard", new { area = "manage" });
+
+
+        }
     }
 }
