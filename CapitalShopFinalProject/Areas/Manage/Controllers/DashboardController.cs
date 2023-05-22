@@ -34,7 +34,7 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
                 return BadRequest();
             }
 
-            IEnumerable<Order> Orders = await _context.Orders.Include(o=>o.OrderItems).ToListAsync();
+            IEnumerable<Order> Orders = await _context.Orders.Include(o=>o.OrderItems).OrderByDescending(o=>o.CreatedAt).ToListAsync();
 
  
 

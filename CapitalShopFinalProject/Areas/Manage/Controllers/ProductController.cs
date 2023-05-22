@@ -322,20 +322,7 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
 
             await _context.SaveChangesAsync();
 
-
-
-
-
-
-
-
-
-           
-
-
-
-
-            return View(product);
+            return RedirectToAction("index", "product", new {area="manage"});
         }
 
 
