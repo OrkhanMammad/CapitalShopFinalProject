@@ -28,21 +28,21 @@
     <div class="product-details-all">
         <div class="container">
             <div class="product-details-main">
-                <div class="product-detail-box">
+                <div style="background-color:white;" class="product-detail-box">
                     <div class="product-detail-box-left">
                         <img src="~/assets/Images/products/@Model.Product.MainImage" alt="">
                     </div>
                     <div class="product-detail-box-right">
-                        <h3>@Model.Product.Title</h3>
-                        <p>$@Model.Product.DiscountedPrice</p>                      
+                        <h3 style="color:black;">@Model.Product.Title</h3>
+                        <p style="color:black;">$@Model.Product.DiscountedPrice</p>
                         @for(var i=1; i<=b; i++)
                         {
-                            <button><i class="fa-regular fa-star"></i></button>
+                            <button><i style="color: gold;" class="fa-regular fa-star"></i></button>
                         }
                         
                         
-                        <span>(@Model.Product.Reviews.Count() Reviews)</span>
-                        <h4><button class="shop-addtobasket-btn" data-id="@Model.Product.ID">Add To Cart</button></h4>
+                        <span style="color: black;">(@Model.Product.Reviews.Count() Reviews)</span>
+                        <h4><button style="color: black;" class="shop-addtobasket-btn" data-id="@Model.Product.ID">Add To Cart</button></h4>
                     </div>
 
                 </div>

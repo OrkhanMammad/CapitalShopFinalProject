@@ -160,9 +160,9 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
                 return View(product);
             }
 
-            if ((product.MainFile?.Length / 1024) > 300)
+            if ((product.MainFile?.Length / 1024) > 2000)
             {
-                ModelState.AddModelError("MainFile", "Maximum 300KB is allowed for image");
+                ModelState.AddModelError("MainFile", "Maximum 2000KB is allowed for image");
                 return View(product);
             }
 
@@ -275,7 +275,7 @@ namespace CapitalShopFinalProject.Areas.Manage.Controllers
             {
                 if (product.MainFile?.ContentType == "image/jpeg")
                 {
-                    if ((product.MainFile?.Length / 1024) < 300)
+                    if ((product.MainFile?.Length / 1024) < 2000)
                     {
                         string fileName = $"{DateTime.Now.ToString("yyyyMMddHHmmssfff")}-{Guid.NewGuid().ToString()}-{product.MainFile.FileName}";
                         string filePath = Path.Combine(_env.WebRootPath, "assets", "Images", "products", fileName);

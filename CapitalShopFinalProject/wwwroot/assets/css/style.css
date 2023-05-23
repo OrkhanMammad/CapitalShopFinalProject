@@ -783,6 +783,7 @@ a {
 .trending-products-image a img {
     width: 100%;
     transition: 0.3s;
+    max-height: 259px;
 
 }
 
@@ -1946,6 +1947,7 @@ color: white !important;
 .product-box-listed .products-image-listed a img {
     width: 100%;
     transition: 0.5s;
+    max-height: 260px;
 }
 
 .products-text-listed a {
@@ -2331,6 +2333,7 @@ width: 25%;
 }
 .basket-product-box-left img{
     width: 100%;
+    max-height:170px;
 }
 
 .basket-product-box-middle{
